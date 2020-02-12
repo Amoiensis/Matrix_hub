@@ -181,3 +181,14 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 ```
+
+ATTENTION
+---------------------------------------
+Please feel free to contact with me for any questions, thank you!
+
+Don't spread the files without permission!
+
+所有文件仅仅供学习交流！
+
+未经允许，请勿传播！
+***************************************

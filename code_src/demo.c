@@ -43,7 +43,8 @@ int main(int argc, char *argv[]) {
 	Matirx*  mat_A10 = Matrix_gen(row,column,_mat_A10);
 	M_print(mat_A10);
 	//	Mat_21
-	MATRIX_TYPE _mat_21[3][3] = { 1,2,3,2,2,2,4,1,3};
+	MATRIX_TYPE _mat_21[3][3] = { 0,2,3,2,1,2,4,1,3};
+//	MATRIX_TYPE _mat_21[3][3] = {0,0,1,0,0,1,0,0,1};
 	row = sizeof(_mat_21) / sizeof(_mat_21[0]);
 	column = sizeof(_mat_21[0]) / sizeof(_mat_21[0][0]);
 	Matirx*  mat_21 = Matrix_gen(row,column,_mat_21);
@@ -92,8 +93,8 @@ int main(int argc, char *argv[]) {
 	M_print(mat_5);
 	// 上三角变换
 	Uptri_struct* _Uptri_ =  M_Uptri_(mat_21);
-	M_print(_Uptri_->trans_matrix);
-	M_print(_Uptri_->Uptri_matrix );
+	M_print(_Uptri_->trans_matrix );
+	M_print(_Uptri_->Uptri_matrix);
 	// 下三角变换
 	Lowtri_struct* _Lowtri_ =  M_Lowtri_(mat_21);
 	M_print(_Lowtri_->Lowtri_matrix);
@@ -120,18 +121,20 @@ int main(int argc, char *argv[]) {
 	printf("Tr(Matrix_%x) = %.4lf\n",_mat_inv,_tr_mat);
 	// 行列式
 	MATRIX_TYPE _det_mat = M_det(_mat_inv);
-	printf("Det(Matrix_%x) = %.4lf\n",_mat_inv,_det_mat);
-	
-	
+	printf("Det(Matrix_%x) = %.4lf\n",mat_21,_det_mat);
+	// 填充
+	Matirx* mat_full = M_full(mat_2,1,1,1,1,0);
+	M_print(mat_full);
 // Application
 	// 解线性方程
 		// mat_A*x = mat_b
+	printf("#Solver:mat_A*x = mat_b\n");
 	Matirx* _mat_result = M_mul(M_Inverse(mat_A10),mat_b10);
 	M_print(_mat_result);
 	
-// Others
+//  Others
 	M_free(_mat_T);
 	
-//	system("pause"); 
+	system("pause"); 
 	return 0;
 }

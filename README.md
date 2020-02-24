@@ -50,6 +50,7 @@ https://github.com/Amoiensis/Matrix_hub
 |       释放内存       |            free_mempry_of_Matrix            |      M_free      |
 |          迹          |                    trace                    |       M_tr       |
 |        行列式        |                 Determinant                 |       M_det      |
+|         填充         |                     Full                    |       M_full     |
 
 Demo (Matrix_hub)
 ---------------------------------------
@@ -61,7 +62,7 @@ code:
 % Author: Xiping Yu
 % Email:Amoiensis@outlook.com
 % Github: https://github.com/Amoiensis/Matrix_hub
-% Data: 2020.02.12 
+% Data: 2020.02.24 
 % Case: Matrix Operation 
 % Dtailed: the code_file of Matrix_hub
 */ 
@@ -75,42 +76,8 @@ int main(int argc, char *argv[]) {
 	system("color 0F");
 // Matrix
 	//	Mat_1
-	MATRIX_TYPE _mat_1[3][5] = { 2,2,1,1,1,4,1,1,1,1,1,5,1,1,1 };
-	int row = sizeof(_mat_1) / sizeof(_mat_1[0]);
-	int column = sizeof(_mat_1[0]) / sizeof(_mat_1[0][0]);
-	Matirx*  mat_1 = Matrix_gen(row,column,_mat_1);
-	M_print(mat_1);
-	//	Mat_2	
-	MATRIX_TYPE _mat_2[5][3] = { 1,2,3,4,5,6,7,8,7,10,11,12,11,14,15 };	
-	//	MATRIX_TYPE _mat_2[5][2] = { 1,2,3,4,5,6,7,8,9,10};	
-	row = sizeof(_mat_2) / sizeof(_mat_2[0]);
-	column = sizeof(_mat_2[0]) / sizeof(_mat_2[0][0]);
-	Matirx*  mat_2 = Matrix_gen(row,column,_mat_2);
-	M_print(mat_2);
-	// Mat_A
-	MATRIX_TYPE _mat_A[5][5] = { 1,0,7,0,9,0,7,0,9,0,0,0,-5,0,4,2,0,0,2,0,0,3,8,0,1};
-	row = sizeof(_mat_A) / sizeof(_mat_A[0]);
-	column = sizeof(_mat_A[0]) / sizeof(_mat_A[0][0]);
-	Matirx*  mat_A = Matrix_gen(row,column,_mat_A);
-	M_print(mat_A);
-	//	Mat_21
-	MATRIX_TYPE _mat_21[3][3] = { 1,2,3,2,2,2,4,1,3};
-	row = sizeof(_mat_21) / sizeof(_mat_21[0]);
-	column = sizeof(_mat_21[0]) / sizeof(_mat_21[0][0]);
-	Matirx*  mat_21 = Matrix_gen(row,column,_mat_21);
-	M_print(mat_21);
-	//	Mat_21b
-	MATRIX_TYPE _mat_21b[3][3] = { 1,0,0,0,1,0,0,0,1};
-	row = sizeof(_mat_21b) / sizeof(_mat_21b[0]);
-	column = sizeof(_mat_21b[0]) / sizeof(_mat_21b[0][0]);
-	Matirx*  mat_21b = Matrix_gen(row,column,_mat_21b);
-	M_print(mat_21b);
-	// Mat_b
-	MATRIX_TYPE _mat_b[5][1] = { 1,2,7,2,4};
-	row = sizeof(_mat_b) / sizeof(_mat_b[0]);
-	column = sizeof(_mat_b[0]) / sizeof(_mat_b[0][0]);
-	Matirx*  mat_b = Matrix_gen(row,column,_mat_b);
-	M_print(mat_b);
+	
+	...
 	
 //	Operation
 	// 乘法 
@@ -137,8 +104,8 @@ int main(int argc, char *argv[]) {
 	M_print(mat_5);
 	// 上三角变换
 	Uptri_struct* _Uptri_ =  M_Uptri_(mat_21);
-	M_print(_Uptri_->trans_matrix);
-	M_print(_Uptri_->Uptri_matrix );
+	M_print(_Uptri_->trans_matrix );
+	M_print(_Uptri_->Uptri_matrix);
 	// 下三角变换
 	Lowtri_struct* _Lowtri_ =  M_Lowtri_(mat_21);
 	M_print(_Lowtri_->Lowtri_matrix);
@@ -165,19 +132,21 @@ int main(int argc, char *argv[]) {
 	printf("Tr(Matrix_%x) = %.4lf\n",_mat_inv,_tr_mat);
 	// 行列式
 	MATRIX_TYPE _det_mat = M_det(_mat_inv);
-	printf("Det(Matrix_%x) = %.4lf\n",_mat_inv,_det_mat);
-	
-	
+	printf("Det(Matrix_%x) = %.4lf\n",mat_21,_det_mat);
+	// 填充
+	Matirx* mat_full = M_full(mat_2,1,1,1,1,0);
+	M_print(mat_full);
 // Application
 	// 解线性方程
 		// mat_A*x = mat_b
-	Matirx* _mat_result = M_mul(M_Inverse(mat_A),mat_b);
+	printf("#Solver:mat_A*x = mat_b\n");
+	Matirx* _mat_result = M_mul(M_Inverse(mat_A10),mat_b10);
 	M_print(_mat_result);
 	
-// Others
+//  Others
 	M_free(_mat_T);
 	
-//	system("pause"); 
+	system("pause"); 
 	return 0;
 }
 ```

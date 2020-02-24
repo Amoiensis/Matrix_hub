@@ -84,6 +84,7 @@ Matirx* M_T(Matirx* _mat_source);
 int M_free(Matirx* _mat);
 MATRIX_TYPE M_tr(Matirx* _mat);
 MATRIX_TYPE M_det(Matirx* _mat);
+Matirx* M_full(Matirx* _mat,int row_up,int row_down,int column_left,int column_right,MATRIX_TYPE full_data);
 
 
 Matirx* Matrix_gen(int row,int column,MATRIX_TYPE* data) {/*Generate Matrix Struct
@@ -193,18 +194,26 @@ int M_E_trans(Matirx* _mat,Etrans_struct* _Etrans_,int line_setting){/*Element t
 	if (line_setting == _ROW_){
 		/*行初等变换*/
 		line_num = _mat->column;
-		for(i=0;i<line_num;i++){
-			if (_Etrans_->scale){
+		if (_Etrans_->scale){
+			for(i=0;i<line_num;i++){
 				_mat->data[(_Etrans_->minuend_line-1)*(_mat->column)+i] -= (_Etrans_->scale)*(_mat->data[(_Etrans_->subtractor_line-1)*(_mat->column)+i]);
 
+			}
+		}else{
+			if((_Etrans_->minuend_line <0)&&(_Etrans_->subtractor_line<0)){/*交换*/
+				M_Swap(_mat,-(_Etrans_->minuend_line),-(_Etrans_->subtractor_line),line_setting);
 			}
 		}
 	}else{
 		/*列初等变换*/ 
 		line_num = _mat->row;
-		for(i=0;i<line_num;i++){
-			if (_Etrans_->scale){
+		if (_Etrans_->scale){
+			for(i=0;i<line_num;i++){			
 			_mat->data[(_Etrans_->minuend_line-1)+(_mat->column)*i] -= (_Etrans_->scale)*(_mat->data[(_Etrans_->subtractor_line-1)+(_mat->column)*i]);
+			}
+		}else{
+			if((_Etrans_->minuend_line <0)&&(_Etrans_->subtractor_line<0)){/*交换*/ 
+				M_Swap(_mat,-(_Etrans_->minuend_line),-(_Etrans_->subtractor_line),line_setting);
 			}
 		}
 	}
@@ -235,53 +244,78 @@ Matirx* Etrans_2_Inverse(Etrans_struct* _Etrans_,int order,int line_setting){/*I
 Matirx* Etrans_2_Matrix(Etrans_struct* _Etrans_,int order,int line_setting){/*Element_trans_to_Matrix
 	基本变换转矩阵*/ 
 	Etrans_struct* temp_Etrans = _Etrans_;
-	while ((temp_Etrans->next_E_trans)!=NULL){
-		temp_Etrans = temp_Etrans->next_E_trans;
-	}
 	Matirx* _mat_result = M_I(order);
-	do{
-		temp_Etrans->scale = (-1)*temp_Etrans->scale;
-		M_E_trans(_mat_result,temp_Etrans,line_setting);
-		temp_Etrans->scale = (-1)*temp_Etrans->scale;
-		temp_Etrans = temp_Etrans->forward_E_trans;
-	}while(temp_Etrans!=NULL);
+	if (_Etrans_ != NULL){
+		while ((temp_Etrans->next_E_trans)!=NULL){
+			temp_Etrans = temp_Etrans->next_E_trans;
+		}
+		//M_print(_mat_result);
+		do{
+			temp_Etrans->scale = (-1)*temp_Etrans->scale;
+			M_E_trans(_mat_result,temp_Etrans,line_setting);
+			temp_Etrans->scale = (-1)*temp_Etrans->scale;
+			temp_Etrans = temp_Etrans->forward_E_trans;
+			//M_print(_mat_result);
+		}while(temp_Etrans!=NULL);
+	}
 	return _mat_result;
 }
 
 Uptri_struct* M_Uptri_(Matirx* _mat_source){/*Upper_triangular_transformation 
 	上三角化*/ 
 	Matirx* _mat = Matrix_copy(_mat_source);
-	int i,j;
+	int i,j,k,flag;
 	Etrans_struct* _Etrans_temp_last = NULL;
 	Etrans_struct*_Etrans_temp_head = NULL;
+	
+	/*初等变换*/
 	for(i=0;i<_mat->column;i++){
 		for(j=i+1;j<_mat->row;j++){
+			flag = 0;
 			Etrans_struct* _Etrans_temp = (Etrans_struct*)malloc(sizeof(Etrans_struct));
 			_Etrans_temp->minuend_line = j+1;
 			_Etrans_temp->subtractor_line = i+1;
 			if ((_mat->data[(_mat->column)*i+i])!= 0){
 				_Etrans_temp->scale = (_mat->data[(_mat->column)*j+i])/(_mat->data[(_mat->column)*i+i]);			
 			}else{
-				
+				_Etrans_temp->scale = 0;
+				for(k=i+1;k<_mat->row;k++){
+					flag = 1;//无可替代行 
+					if((_mat->data[(_mat->column)*k+i])!=0){
+						_Etrans_temp->minuend_line = -(i+1);
+						_Etrans_temp->subtractor_line = -(k+1);
+						flag = 2;//表示能够替换行 
+						break;
+					}
+				}
+				if(flag == 1){
+					break;
+				}			
 			}
 			_Etrans_temp->forward_E_trans = NULL;
 			_Etrans_temp->next_E_trans = NULL;
-			if (j==1){
+			if(_Etrans_temp_head ==NULL){
 				_Etrans_temp_head = _Etrans_temp;
 				_Etrans_temp->forward_E_trans = NULL;
 			}else{
 				_Etrans_temp->forward_E_trans = _Etrans_temp_last;
+		
 			}
 			if ((i+1)==_mat->column){
 					_Etrans_temp->next_E_trans = NULL;
 			}else{
-				if (j!=1){
+				if (_Etrans_temp_last != NULL){
 					_Etrans_temp_last->next_E_trans = _Etrans_temp;
 				}				
-			}			
+			}		
 			M_E_trans(_mat,_Etrans_temp,_ROW_);
-//			M_print(_mat); //显示具体矩阵 
-			_Etrans_temp_last = _Etrans_temp;		
+			//M_print(_mat); //显示具体矩阵 
+			_Etrans_temp_last = _Etrans_temp;
+			
+			if(flag==2){
+					i = i-1;
+					break;
+			} 		
 			}
 		}
 	Matirx* trans_mat = Etrans_2_Matrix(_Etrans_temp_head,_mat->row,_ROW_);
@@ -289,42 +323,68 @@ Uptri_struct* M_Uptri_(Matirx* _mat_source){/*Upper_triangular_transformation
 	_Uptri->trans_matrix = trans_mat;
 	_Uptri->Uptri_matrix = _mat;
 	printf(">>Uptri(Matrix_%x)=\n",_mat_source);
-	printf("\tMatrix_%x * Matrix_%x\n",_mat,trans_mat);
+	printf("\tMatrix_%x * Matrix_%x\n",trans_mat,_mat);
 	return _Uptri;
 }
 
 Uptri_struct* M_Uptri_4inv (Matirx* _mat_source){/*Upper_triangular_transformation_for_Inverse 
 	上三角化_求逆使用*/ 
 	Matirx* _mat = Matrix_copy(_mat_source);
-	int i,j;
+	int i,j,k,flag;
 	Etrans_struct* _Etrans_temp_last = NULL;
 	Etrans_struct*_Etrans_temp_head = NULL;
+	
+	/*初等变换*/
 	for(i=0;i<_mat->column;i++){
 		for(j=i+1;j<_mat->row;j++){
+			flag = 0;
 			Etrans_struct* _Etrans_temp = (Etrans_struct*)malloc(sizeof(Etrans_struct));
 			_Etrans_temp->minuend_line = j+1;
 			_Etrans_temp->subtractor_line = i+1;
-			_Etrans_temp->scale = (_mat->data[(_mat->column)*j+i])/(_mat->data[(_mat->column)*i+i]);
+			if ((_mat->data[(_mat->column)*i+i])!= 0){
+				_Etrans_temp->scale = (_mat->data[(_mat->column)*j+i])/(_mat->data[(_mat->column)*i+i]);			
+			}else{
+				_Etrans_temp->scale = 0;
+				for(k=i+1;k<_mat->row;k++){
+					flag = 1;//无可替代行 
+					if((_mat->data[(_mat->column)*k+i])!=0){
+						_Etrans_temp->minuend_line = -(i+1);
+						_Etrans_temp->subtractor_line = -(k+1);
+						flag = 2;//表示能够替换行 
+						break;
+					}
+				}
+				if(flag == 1){
+					break;
+				}			
+			}
 			_Etrans_temp->forward_E_trans = NULL;
 			_Etrans_temp->next_E_trans = NULL;
-			if (j==1){
+			//if (j==1){
+			if(_Etrans_temp_head ==NULL){
 				_Etrans_temp_head = _Etrans_temp;
 				_Etrans_temp->forward_E_trans = NULL;
 			}else{
 				_Etrans_temp->forward_E_trans = _Etrans_temp_last;
+		
 			}
 			if ((i+1)==_mat->column){
 					_Etrans_temp->next_E_trans = NULL;
 			}else{
-				if (j!=1){
+				if (_Etrans_temp_last != NULL){
 					_Etrans_temp_last->next_E_trans = _Etrans_temp;
 				}				
-			}			
+			}		
 			M_E_trans(_mat,_Etrans_temp,_ROW_);
-//			M_print(_mat); //显示具体矩阵 
-			_Etrans_temp_last = _Etrans_temp;		
-			}
+			//M_print(_mat); //显示具体矩阵 
+			_Etrans_temp_last = _Etrans_temp;
+			
+			if(flag==2){
+					i = i-1;
+					break;
+			} 		
 		}
+	}
 	Matirx* trans_mat = Etrans_2_Inverse(_Etrans_temp_head,_mat->row,_ROW_);
 	Uptri_struct* _Uptri = (Uptri_struct*)malloc(sizeof(Uptri_struct));
 	_Uptri->trans_matrix = trans_mat;
@@ -340,18 +400,38 @@ Uptri_struct* M_Uptri_4inv (Matirx* _mat_source){/*Upper_triangular_transformati
 Lowtri_struct* M_Lowtri_(Matirx* _mat_source){/*Lower_triangular_transformation
 	下三角化*/ 
 	Matirx* _mat = Matrix_copy(_mat_source);
-	int i,j;
+	int i,j,k,flag;
 	Etrans_struct* _Etrans_temp_last = NULL;
 	Etrans_struct*_Etrans_temp_head = NULL;
 	for(i=0;i<_mat->row;i++){
 		for(j=i+1;j<_mat->column;j++){
+			flag = 0;
 			Etrans_struct* _Etrans_temp = (Etrans_struct*)malloc(sizeof(Etrans_struct));
 			_Etrans_temp->minuend_line = j+1;
 			_Etrans_temp->subtractor_line = i+1;
-			_Etrans_temp->scale = (_mat->data[(_mat->column)*i+j])/(_mat->data[(_mat->column)*i+i]);
+			
+			
+			if ((_mat->data[(_mat->column)*i+i])!= 0){
+				_Etrans_temp->scale = (_mat->data[(_mat->column)*i+j])/(_mat->data[(_mat->column)*i+i]);;			
+			}else{
+				_Etrans_temp->scale = 0;
+				for(k=i+1;k<_mat->row;k++){
+					flag = 1;//无可替代行 
+					if((_mat->data[(_mat->column)*k+i])!=0){
+						_Etrans_temp->minuend_line = -(i+1);
+						_Etrans_temp->subtractor_line = -(k+1);
+						flag = 2;//表示能够替换行 
+						break;
+					}
+				}
+				if(flag == 1){
+					break;
+				}			
+			}
+			
 			_Etrans_temp->forward_E_trans = NULL;
 			_Etrans_temp->next_E_trans = NULL;
-			if (j==1){
+			if (_Etrans_temp_head ==NULL){
 				_Etrans_temp_head = _Etrans_temp;
 				_Etrans_temp->forward_E_trans = NULL;
 			}else{
@@ -360,15 +440,19 @@ Lowtri_struct* M_Lowtri_(Matirx* _mat_source){/*Lower_triangular_transformation
 			if ((i+1)==_mat->column){
 					_Etrans_temp->next_E_trans = NULL;
 			}else{
-				if (j!=1){
+				if (_Etrans_temp_last != NULL){
 					_Etrans_temp_last->next_E_trans = _Etrans_temp;
 				}				
 			}			
 			M_E_trans(_mat,_Etrans_temp,_COLUMN_);
-//			M_print(_mat); //显示具体矩阵 
-			_Etrans_temp_last = _Etrans_temp;		
-			}
+			M_print(_mat); //显示具体矩阵 
+			_Etrans_temp_last = _Etrans_temp;
+			if(flag==2){
+					i = i-1;
+					break;
+			} 		
 		}
+	}
 	Matirx* trans_mat = Etrans_2_Matrix(_Etrans_temp_head,_mat->row,_COLUMN_);
 	Lowtri_struct* _Lowtri = (Lowtri_struct*)malloc(sizeof(Lowtri_struct));
 	_Lowtri->trans_matrix = trans_mat;
@@ -381,18 +465,38 @@ Lowtri_struct* M_Lowtri_(Matirx* _mat_source){/*Lower_triangular_transformation
 Lowtri_struct*  M_Lowtri_4inv (Matirx* _mat_source){/*_Lower_triangular_transformation_for_Inverse 
 	下三角化_求逆使用*/ 
 	Matirx* _mat = Matrix_copy(_mat_source);
-	int i,j;
+	int i,j,k,flag;
 	Etrans_struct* _Etrans_temp_last = NULL;
 	Etrans_struct*_Etrans_temp_head = NULL;
 	for(i=0;i<_mat->row;i++){
 		for(j=i+1;j<_mat->column;j++){
+			flag = 0;
 			Etrans_struct* _Etrans_temp = (Etrans_struct*)malloc(sizeof(Etrans_struct));
 			_Etrans_temp->minuend_line = j+1;
 			_Etrans_temp->subtractor_line = i+1;
-			_Etrans_temp->scale = (_mat->data[(_mat->column)*i+j])/(_mat->data[(_mat->column)*i+i]);
+			
+			
+			if ((_mat->data[(_mat->column)*i+i])!= 0){
+				_Etrans_temp->scale = (_mat->data[(_mat->column)*i+j])/(_mat->data[(_mat->column)*i+i]);;			
+			}else{
+				_Etrans_temp->scale = 0;
+				for(k=i+1;k<_mat->row;k++){
+					flag = 1;//无可替代行 
+					if((_mat->data[(_mat->column)*k+i])!=0){
+						_Etrans_temp->minuend_line = -(i+1);
+						_Etrans_temp->subtractor_line = -(k+1);
+						flag = 2;//表示能够替换行 
+						break;
+					}
+				}
+				if(flag == 1){
+					break;
+				}			
+			}
+			
 			_Etrans_temp->forward_E_trans = NULL;
 			_Etrans_temp->next_E_trans = NULL;
-			if (j==1){
+			if (_Etrans_temp_head ==NULL){
 				_Etrans_temp_head = _Etrans_temp;
 				_Etrans_temp->forward_E_trans = NULL;
 			}else{
@@ -401,15 +505,19 @@ Lowtri_struct*  M_Lowtri_4inv (Matirx* _mat_source){/*_Lower_triangular_transfor
 			if ((i+1)==_mat->column){
 					_Etrans_temp->next_E_trans = NULL;
 			}else{
-				if (j!=1){
+				if (_Etrans_temp_last != NULL){
 					_Etrans_temp_last->next_E_trans = _Etrans_temp;
 				}				
 			}			
 			M_E_trans(_mat,_Etrans_temp,_COLUMN_);
-//			M_print(_mat); //显示具体矩阵 
-			_Etrans_temp_last = _Etrans_temp;		
-			}
+			//M_print(_mat); //显示具体矩阵 
+			_Etrans_temp_last = _Etrans_temp;
+			if(flag==2){
+					i = i-1;
+					break;
+			} 		
 		}
+	}
 	Matirx* trans_mat = Etrans_2_Inverse(_Etrans_temp_head,_mat->row,_COLUMN_);
 	Lowtri_struct* _Lowtri = (Lowtri_struct*)malloc(sizeof(Lowtri_struct));
 	_Lowtri->trans_matrix = trans_mat;
@@ -594,11 +702,11 @@ MATRIX_TYPE M_tr(Matirx* _mat){/*Trace
 	return _tr_mat;
 }
 
-MATRIX_TYPE M_det(Matirx* _mat){/*Determinant
+MATRIX_TYPE M_det(Matirx* _mat_){/*Determinant
 	行列式*/
 	MATRIX_TYPE _det_mat = 0;
-	if (_mat->column == _mat->row){
-		Uptri_struct* _Uptri_ =  M_Uptri_(_mat);
+	if (_mat_->column == _mat_->row){
+		Uptri_struct* _Uptri_ =  M_Uptri_(_mat_);
 		Matirx* _mat = _Uptri_->Uptri_matrix;
 		_det_mat = 1;
 		int i;
@@ -611,4 +719,31 @@ MATRIX_TYPE M_det(Matirx* _mat){/*Determinant
 	}
 	return 	_det_mat;
 } 
+
+Matirx* M_full(Matirx* _mat,int row_up,int row_down,int column_left,int column_right,MATRIX_TYPE full_data){/*Full 
+	填充矩阵*/
+	Matirx* mat_result = NULL;
+	mat_result = (Matirx*)malloc(sizeof(Matirx));
+	mat_result->row = (_mat->row+row_up+row_down);
+	mat_result->column = (_mat->column+column_left+column_right);
+	mat_result->data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*(mat_result->row)*(mat_result->column));
+	int i,j;
+	for(i=0;i<mat_result->row;i++){
+		for(j=0;j<mat_result->column;j++){
+			if((i>=row_up)&&(i<(row_up+_mat->row))){/*这里的双判断，可以优化*/
+				if((j>=column_left)&&(j<(column_left+_mat->column))){
+					mat_result->data[i*(mat_result->column)+j] = _mat->data[(_mat->column)*(i-row_up)+(j-column_left)];
+				}else{
+					mat_result->data[i*(mat_result->column)+j] = full_data;
+				}
+			}else{
+				mat_result->data[i*(mat_result->column)+j] = full_data;
+			}
+		}
+	}
+	printf(">>Full<U%d,D%d,L%d,R%d>(Matrix_%x)=\n",row_up,row_down,column_left,column_right,_mat);
+	printf("\tMatrix_%x\n",mat_result);
+	return mat_result;
+}
+
 

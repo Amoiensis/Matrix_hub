@@ -125,6 +125,9 @@ int main(int argc, char *argv[]) {
 	// 填充
 	Matirx* mat_full = M_full(mat_2,1,1,1,1,0);
 	M_print(mat_full);
+	// 范数
+	printf("NORM1 = %lf\n",M_norm(mat_b,1));
+	printf("NORM2 = %lf\n",M_norm(mat_b,2));
 // Application
 	// 解线性方程
 		// mat_A*x = mat_b

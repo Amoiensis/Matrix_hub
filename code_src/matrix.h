@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h> 
 #include "state.h"
 
 typedef struct _Matrix {
@@ -85,7 +86,7 @@ int M_free(Matirx* _mat);
 MATRIX_TYPE M_tr(Matirx* _mat);
 MATRIX_TYPE M_det(Matirx* _mat);
 Matirx* M_full(Matirx* _mat,int row_up,int row_down,int column_left,int column_right,MATRIX_TYPE full_data);
-
+MATRIX_TYPE M_norm(Matirx* _mat, int Setting);
 
 Matirx* Matrix_gen(int row,int column,MATRIX_TYPE* data) {/*Generate Matrix Struct
 	导入_生成矩阵*/
@@ -746,4 +747,26 @@ Matirx* M_full(Matirx* _mat,int row_up,int row_down,int column_left,int column_r
 	return mat_result;
 }
 
+MATRIX_TYPE M_norm(Matirx* _mat, int Setting) {/*Caculate Matrix norm-num 
+	向量/矩阵范数 Setting=1 - 1范数，Setting=2 - 2范数*/
+	MATRIX_TYPE* data = _mat->data;
+	int row = _mat->row;
+	int column = _mat->column;
+	MATRIX_TYPE Val_norm = 0;
+	int i,j;
+	if (Setting == 2){
+		for (i = 0; i<row; i++) {
+			for (j = 0; j<column; j++){
+				Val_norm += data[i*(column)+j]*data[i*(column)+j];
+			}
+		}
+	}else{
+		for (i = 0; i<row; i++) {
+			for (j = 0; j<column; j++){
+				Val_norm += abs(data[i*(column)+j]);
+			}
+		}
+	}
+	return Val_norm;
+}
 

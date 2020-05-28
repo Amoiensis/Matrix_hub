@@ -87,6 +87,9 @@ MATRIX_TYPE M_tr(Matirx* _mat);
 MATRIX_TYPE M_det(Matirx* _mat);
 Matirx* M_full(Matirx* _mat,int row_up,int row_down,int column_left,int column_right,MATRIX_TYPE full_data);
 MATRIX_TYPE M_norm(Matirx* _mat, int Setting);
+Matirx* M_numul(Matirx* _mat,MATRIX_TYPE _num);
+Matirx* M_matFull(Matirx* _mat,int row_up,int column_left,Matirx* _mat_full);
+
 
 Matirx* Matrix_gen(int row,int column,MATRIX_TYPE* data) {/*Generate Matrix Struct
 	µ¼Èë_Éú³É¾ØÕó*/
@@ -768,5 +771,39 @@ MATRIX_TYPE M_norm(Matirx* _mat, int Setting) {/*Caculate Matrix norm-num
 		}
 	}
 	return Val_norm;
+}
+
+Matirx* M_numul(Matirx* _mat,MATRIX_TYPE _num){/*Matrix Multiply
+	¾ØÕóÊý³Ë 
+	_mat_result = _mat_left*_mat_right */
+	MATRIX_TYPE* data = _mat->data;
+	int Size_mat = (_mat->row)*(_mat->column),i;
+	for (i = 0; i<Size_mat; i++) {
+			data[i] = data[i]*_num;
+	}
+	return _mat;	
+}
+
+Matirx* M_matFull(Matirx* _mat,int row_up,int column_left,Matirx* _mat_full){/*Full 
+	Ê¹ÓÃ¾ØÕóÌî³ä¾ØÕó*/
+	MATRIX_TYPE* data = _mat->data;
+	int row = _mat->row;
+	int column = _mat->column;
+	int i,j;
+	if ((row_up+_mat_full->row)>row){
+		printf(M_Mfull_010);
+		system("pause");
+	}
+	if ((column_left+_mat_full->column)>column){
+		printf(M_Mfull_011);
+		system("pause");
+	}
+	int full_row = _mat_full->row, full_column = _mat_full->column;
+	for(i=0;i<full_row;i++){
+		for(j=0;j<full_column;j++){
+			data[(row_up+i)*column+(column_left+j)] = _mat_full->data[i*full_column+j];
+		}	
+	}
+	return _mat;
 }
 

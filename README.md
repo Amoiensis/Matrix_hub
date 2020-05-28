@@ -51,7 +51,9 @@ https://github.com/Amoiensis/Matrix_hub
 |          迹          |                    trace                    |       M_tr       |
 |        行列式        |                 Determinant                 |       M_det      |
 |         填充         |                     Full                    |       M_full     |
-|         范数         |                     Norm                    |       M_full     |
+|         范数         |                     Norm                    |       M_norm     |
+|       矩阵数乘       |             Number Multiplication           |       M_numul    |
+|  (使用矩阵)填充矩阵   |                Full with matrix             |      M_matFull   |
 
 Demo (Matrix_hub)
 ---------------------------------------

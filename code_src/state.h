@@ -18,5 +18,5 @@
 #define M_Cut_007 		"@ERROR: Matrix_Cut Wrong!\n\tDetails:(M_Cut_007)_Range_can't_be_negative!'\n"
 #define M_tr_008 		"@ERROR: Matrix_trace Wrong!\n\tDetails:(M_tr_008)_ROW_!=_COLUMN.'\n"
 #define M_det_009 		"@ERROR: Matrix_Determinant_ Wrong!\n\tDetails:(M_det_009)_ROW_!=_COLUMN.'\n"
-#define M_Mfull_010 		"@ERROR: M_matFull Wrong!\n\tDetails:(M_det_009)_ROW_OVER!.'\n"
-#define M_Mfull_011 		"@ERROR: M_matFull Wrong!\n\tDetails:(M_det_009)_COLUMN_OVER!.'\n"
+#define M_Mfull_010 		"@ERROR: M_matFull Wrong!\n\tDetails:(M_Mfull_010)_ROW_OVER!.'\n"
+#define M_Mfull_011 		"@ERROR: M_matFull Wrong!\n\tDetails:(M_Mfull_011)_COLUMN_OVER!.'\n"

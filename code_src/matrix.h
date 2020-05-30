@@ -14,6 +14,7 @@
 #include <math.h> 
 #include "state.h"
 
+
 typedef struct _Matrix {
 	/*Store Matrix
 	存储矩阵*/
@@ -89,8 +90,19 @@ Matirx* M_full(Matirx* _mat,int row_up,int row_down,int column_left,int column_r
 MATRIX_TYPE M_norm(Matirx* _mat, int Setting);
 Matirx* M_numul(Matirx* _mat,MATRIX_TYPE _num);
 Matirx* M_matFull(Matirx* _mat,int row_up,int column_left,Matirx* _mat_full);
-
-
+Matirx* M_Zeros(int row, int column);
+Matirx* M_Ones(int row, int column);
+Matirx* M_find(Matirx* _mat, MATRIX_TYPE value);
+Matirx* M_sum(Matirx* _mat);
+int Min_position(MATRIX_TYPE* data,int size);
+Matirx* M_min(Matirx* _mat);
+Matirx* M_max(Matirx* _mat);
+Matirx* M_minax_val(Matirx* _mat, Matirx* _mat_position);
+Matirx* M_logic_equal(Matirx* _mat,MATRIX_TYPE value);
+Matirx* M_logic(Matirx* _mat_left, Matirx* _mat_right,int Operation);
+Matirx* M_pmuldiv(Matirx* _mat_left, Matirx* _mat_right,int operation);
+Matirx* M_setval(Matirx* _mat_ini, Matirx* _mat_val, Matirx* _mat_order, int model);
+ 
 Matirx* Matrix_gen(int row,int column,MATRIX_TYPE* data) {/*Generate Matrix Struct
 	导入_生成矩阵*/
 	Matirx* _mat = (Matirx*)malloc(sizeof(Matirx));
@@ -643,7 +655,7 @@ Matirx* M_Cut(Matirx* _mat,int row_head,int row_tail,int column_head,int column_
 		}		
 	}
 	
-	if ((row_tail>_mat->row)||(column_tail>>_mat->column)){
+	if ((row_tail>_mat->row)||(column_tail>_mat->column)){
 		printf(M_Cut_005);
 		system("pause");
 	}else{
@@ -673,12 +685,12 @@ Matirx* M_T(Matirx* _mat_source){/*Transpose
 	Matirx* _mat = (Matirx*)malloc(sizeof(Matirx));
 	_mat->column = _mat_source->row;
 	_mat->row = _mat_source->column ;
-	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*(_mat->column)*_mat->row);
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*(_mat->column)*(_mat->row));
 	_mat->data = data;
 	int i,j;
 	for (i=0;i<(_mat->row);i++){
 		for(j=0;j<_mat->column;j++){
-			data[i*(_mat->column)+j] = _mat_source->data[j*(_mat_source->row)+i];
+			data[i*(_mat->column)+j] = _mat_source->data[j*(_mat_source->column)+i];
 		}
 	}
 	return _mat;
@@ -805,5 +817,292 @@ Matirx* M_matFull(Matirx* _mat,int row_up,int column_left,Matirx* _mat_full){/*F
 		}	
 	}
 	return _mat;
+}
+
+Matirx* M_Zeros(int row, int column){/*Generate Zeros _matrix
+	生成全零矩阵*/ 
+	Matirx* Zero_mat = (Matirx*)malloc(sizeof(Matirx));
+	Zero_mat->column = column;
+	Zero_mat->row = row;
+	int size = row*column,i;
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc((size) * sizeof(MATRIX_TYPE));
+	for(i=0;i<size;i++){
+		data[i] = 0;
+	}
+	Zero_mat->data = data;
+	return Zero_mat;
+}
+
+Matirx* M_Ones(int row, int column){/*Generate Ones _matrix
+	生成全一矩阵*/ 
+	Matirx* Zero_mat = (Matirx*)malloc(sizeof(Matirx));
+	Zero_mat->row = row;
+	Zero_mat->column = column;
+	int size = row*column,i;
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc((size) * sizeof(MATRIX_TYPE));
+	for(i=0;i<size;i++){
+		data[i] = 1;
+	}
+	Zero_mat->data = data;
+	return Zero_mat;
+}
+
+Matirx* M_find(Matirx* _mat, MATRIX_TYPE value){
+	int size_mat = (_mat->row)*(_mat->column);
+	int* position = (int*)malloc(sizeof(int)*size_mat);
+	int num = 0, temp_column, temp_row,i;
+	for (i=0;i<size_mat;i++){
+		if (_mat->data[i] == value){
+			position[num] = i;
+			num = num+1;
+		}
+	}
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*num);
+	for (i=0;i<num;i++){
+		temp_column = position[i]%(_mat->column);
+		temp_row = (position[i]-temp_column)/(_mat->column);
+		data[i] = temp_column*(_mat->row) + temp_row;
+	}
+	Matirx* mat_result = (Matirx*)malloc(sizeof(Matirx));
+	mat_result->row = num;
+	mat_result->column = 1;
+	mat_result->data = data;
+	free(position);
+	return mat_result;
+};
+
+Matirx* M_sum(Matirx* _mat){
+	Matirx* mat_result = (Matirx*)malloc(sizeof(Matirx));
+	int row = _mat->row, column = _mat->column;
+	int i,j, size = row*column;
+	if(row==_ONE_||column==_ONE_){
+		MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE));
+		data[0] = 0;
+		for(i=0;i<(size);i++){
+			data[0] = data[0] + _mat->data[i];
+		}
+		mat_result->row = 1;
+		mat_result->column = 1;
+		mat_result->data = data;
+	}else{
+		MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*column);
+		for(i=0;i<(column);i++){
+			data[i] = 0;
+			for(j=0;j<(row);j++){
+				data[i] = data[i] + _mat->data[j*column+i];
+			}
+		}
+		mat_result->row = 1;
+		mat_result->column = column;
+		mat_result->data = data;
+	}
+	return mat_result;
+}
+
+Matirx* M_min(Matirx* _mat){
+	Matirx* mat_result = (Matirx*)malloc(sizeof(Matirx));
+	int row = _mat->row, column = _mat->column;
+	int i,j, size = row*column;
+	if(row==_ONE_||column==_ONE_){
+		MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE));
+		data[0] = Min_position(_mat->data,size);
+		mat_result->row = 1;
+		mat_result->column = 1;
+		mat_result->data = data;
+	}else{
+		MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*column);
+		MATRIX_TYPE* temp_data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*row);
+		for(i=0;i<(column);i++){
+			for(j=0;j<(row);j++){
+				temp_data[j] = _mat->data[j*column+i];
+			}
+			data[i] = Min_position(temp_data,row);
+		}
+		mat_result->row = 1;
+		mat_result->column = column;
+		mat_result->data = data;
+	}
+	return mat_result;
+}
+
+int Min_position(MATRIX_TYPE* data,int size){
+	MATRIX_TYPE Val_min = data[size-1];
+	int min_position = size-1, i;
+	for (i=size-2;i>=0;i--){
+		if (data[i]<=Val_min){
+			Val_min = data[i];
+			min_position = i;
+		}
+	}
+	return min_position;
+}
+
+Matirx* M_max(Matirx* _mat){
+	Matirx* _mat_ = Matrix_copy(_mat);
+	_mat_ = M_numul(_mat_,-1);
+	Matirx* mat_result = M_min(_mat_);
+	M_free(_mat_);
+	return mat_result;
+}
+
+Matirx* M_minax_val(Matirx* _mat, Matirx* _mat_position){
+	Matirx* mat_val = (Matirx*)malloc(sizeof(Matirx));
+	mat_val->row = _mat_position->row;
+	mat_val->column = _mat_position->column;
+	int i,temp, size_mat = (_mat_position->row)*(_mat_position->column);
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*size_mat);
+	for (i=0;i<size_mat;i++){
+		temp = (_mat_position->data[i]);
+		data[i] = _mat->data[temp*(_mat->column)+i];
+	}
+	mat_val->data = data;
+	return mat_val;
+}
+
+Matirx* M_logic_equal(Matirx* _mat, MATRIX_TYPE value){
+	int size_mat = (_mat->row)*(_mat->column), i;
+	Matirx* mat_logic = (Matirx*)malloc(sizeof(Matirx));
+	mat_logic->row = (_mat->row);
+	mat_logic->column = (_mat->column);
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*size_mat);
+	for (i=0;i<size_mat;i++){
+		if(_mat->data[i] == value){
+			data[i] = 1;
+		}else{
+			data[i] = 0;
+		}
+	}
+	mat_logic->data = data;
+	return mat_logic;
+}
+
+Matirx* M_logic(Matirx* _mat_left, Matirx* _mat_right,int Operation){
+	Matirx* mat_logic = (Matirx*)malloc(sizeof(Matirx));
+	if (_mat_right){
+		if (_mat_left->row != _mat_right->row){
+			printf(M_logic_012);
+			system("pause");
+		}
+		if (_mat_left->column != _mat_right->column){
+			printf(M_logic_013);
+			system("pause");
+		}
+	}
+	
+	int size_mat = (_mat_left->row)*(_mat_left->column), i;
+	mat_logic->row = (_mat_left->row);
+	mat_logic->column = (_mat_left->column);
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*size_mat);
+	switch(Operation){
+		case _AND_:
+			for (i=0;i<size_mat;i++){
+				if ((_mat_left->data[i]==0)||(_mat_right->data[i]==0)){
+					data[i] = 0;
+				}else{
+					data[i] = 1;
+				}
+			}
+			break;
+		case _OR_:
+			for (i=0;i<size_mat;i++){
+				if ((_mat_left->data[i]!=0)||(_mat_right->data[i]!=0)){
+					data[i] = 1;
+				}else{
+					data[i] = 0;
+				}
+			}
+			break;
+		case _NOT_:
+			for (i=0;i<size_mat;i++){
+				if (_mat_left->data[i]==0){
+					data[i] = 1;
+				}else{
+					data[i] = 0;
+				}
+			}
+			break;
+		default:
+			printf(M_logic_014);
+	}	
+	mat_logic->data = data;
+	return mat_logic;
+}
+
+Matirx* M_pmuldiv(Matirx* _mat_left, Matirx* _mat_right,int operation){/*Point Mul and Div
+	矩阵点乘/点除*/
+	Matirx* mat_result = (Matirx*)malloc(sizeof(Matirx));
+	if (_mat_left->row != _mat_right->row){
+			printf(M_pmuldiv_015);
+			system("pause");
+		}
+	if (_mat_left->column != _mat_right->column){
+			printf(M_pmuldiv_016);
+			system("pause");
+	}
+	int i,size_mat = (_mat_left->row)*(_mat_left->column);
+	mat_result->row = (_mat_left->row);
+	mat_result->column = (_mat_left->column);
+	MATRIX_TYPE* data = (MATRIX_TYPE*)malloc(sizeof(MATRIX_TYPE)*size_mat);
+	if (operation == _MUL_){
+		for (i=0;i<size_mat;i++){
+				data[i] = (_mat_left->data[i])*(_mat_right->data[i]);
+		}
+	}else{
+		if (operation == _DIV_){
+			for (i=0;i<size_mat;i++){
+				if (_mat_right->data[i]!=0){
+					data[i] = (_mat_left->data[i])/(_mat_right->data[i]);
+				} else{
+					data[i] = _INFINITE_;
+				} 
+				
+			}
+		}else{
+			printf(M_pmuldiv_017);
+		}	
+	}
+	mat_result->data = data;
+	return mat_result;
+}
+
+Matirx* M_setval(Matirx* _mat_ini, Matirx* _mat_val, Matirx* _mat_order, int model){/*Mat Set Value
+使用矩阵传递数据，给矩阵指定位置赋值 
+*/
+	int i,temp,size_ini = (_mat_ini->column)*(_mat_ini->row);
+	int size_val = (_mat_val->column)*(_mat_val->row);
+	int size_order = (_mat_order->column)*(_mat_order->row);
+	if (model == _ORD4INI_){/*_ORD4INI_*/
+		for(i=0;i<size_order;i++){
+			if ((_mat_order->data[i])<size_ini){
+				if (i<size_val){
+					temp = (_mat_order->data[i]);
+					_mat_ini->data[temp] = _mat_val->data[i];
+				}else{
+					printf(M_setval_019);
+					system("pause");
+				}			
+			}else{
+				printf(M_setval_018);
+				system("pause");
+			}
+		}
+	}else{/*_ORD4VAL_*/
+		for(i=0;i<size_ini;i++){
+			if ((i)<size_order){
+				temp = (_mat_order->data[i]);
+				if (temp<size_val){
+					_mat_ini->data[i] = _mat_val->data[temp];
+				}else{
+					printf(M_setval_019);
+					system("pause");
+				}			
+			}else{
+				printf(M_setval_020);
+				system("pause");
+			}
+		}
+	}
+	
+	return _mat_ini;
 }
 

@@ -26,83 +26,45 @@ https://github.com/Amoiensis/Matrix_hub
 [CONTENT](https://github.com/Amoiensis/Matrix_hub)
 ---------------------------------------
 ####（操作-函数）
-|         操作         |                  OPERATION                  |     func_NAME    |
-|:--------------------:|:-------------------------------------------:|:----------------:|
-|       生成矩阵       |                  generation                 |    Matrix_gen    |
-|       复制矩阵       |                     copy                    |    Matrix_copy   |
-|         乘法         |                   multiply                  |       M_mul      |
-|        加减法        |                   add/sub                   |     M_add_sub    |
-|       矩阵显示       |                    print                    |      M_print     |
-|    单位矩阵(生成)    |             identity_matrix(gen)            |        M_I       |
-|     矩阵基本变换     |            matrix_element_teransf           |     M_E_trans    |
-|     基本变换矩阵     |             Element_trans2Matrix            |  Etrans_2_Matrix |
-| 基本变换矩阵的逆矩阵 |           inv_Element_trans2Matrix          | Etrans_2_Inverse |
-|       上三角化       |       Upper_triangular_transformation       |     M_Uptri_     |
-|   上三角化(求逆用)   | Upper_triangular_transformation_for_Inverse |   M_Uptri_4inv   |
-|       下三角化       |       Lower_triangular_transformation       |     M_Lowtri_    |
-|   下三角化(求逆用)   | Lower_triangular_transformation_for_Inverse |   M_Lowtri_4inv  |
-|     对角矩阵求逆     |          Matrix_Inv_for_Dia_matrix          |     M_Dia_Inv    |
-|        对角化        |               Diagonalization               |     M_Diatri_    |
-|         求逆         |                Matrix_Inverse               |     M_Inverse    |
-|    矩阵行(列)调换    |                  Swap_Line                  |      M_Swap      |
-|         转置         |                  Transpose                  |        M_T       |
-|     切取部分矩阵     |            Cut_out_part_of_Matrix           |       M_Cut      |
-|       释放内存       |            free_mempry_of_Matrix            |      M_free      |
-|          迹          |                    trace                    |       M_tr       |
-|        行列式        |                 Determinant                 |       M_det      |
-|         填充         |                     Full                    |       M_full     |
-|         范数         |                     Norm                    |       M_norm     |
-|       矩阵数乘       |             Number Multiplication           |       M_numul    |
-|  (使用矩阵)填充矩阵   |                Full with matrix             |      M_matFull   |
-|  (使用矩阵)填充矩阵   |                Full with matrix             |      M_matFull   |
-
-| 操作                                   | OPERATION                                                                                      | func_NAME        | 操作                                   |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------- |
-| 生成矩阵                             | generation                                                                                     | Matrix_gen       | 生成矩阵                             |
-| 复制矩阵                             | copy                                                                                           | Matrix_copy      | 复制矩阵                             |
-| 乘法                                   | multiply                                                                                       | M_mul            | 乘法                                   |
-| 加减法                                | add/sub                                                                                        | M_add_sub        | 加减法                                |
-| 矩阵显示                             | print                                                                                          | M_print          | 矩阵显示                             |
-| 单位矩阵(生成)                     | identity_matrix(gen)                                                                           | M_I              | 单位矩阵(生成)                     |
-| 矩阵基本变换                       | matrix_element_teransf                                                                         | M_E_trans        | 矩阵基本变换                       |
-| 基本变换矩阵                       | Element_trans2Matrix                                                                           | Etrans_2_Matrix  | 基本变换矩阵                       |
-| 基本变换矩阵的逆矩阵           | inv_Element_trans2Matrix                                                                       | Etrans_2_Inverse | 基本变换矩阵的逆矩阵           |
-| 上三角化                             | Upper_triangular_transformation                                                                | M_Uptri_         | 上三角化                             |
-| 上三角化(求逆用)                  | Upper_triangular_transformation_for_Inverse                                                    | M_Uptri_4inv     | 上三角化(求逆用)                  |
-| 下三角化                             | Lower_triangular_transformation                                                                | M_Lowtri_        | 下三角化                             |
-| 下三角化(求逆用)                  | Lower_triangular_transformation_for_Inverse                                                    | M_Lowtri_4inv    | 下三角化(求逆用)                  |
-| 对角矩阵求逆                       | Matrix_Inv_for_Dia_matrix                                                                      | M_Dia_Inv        | 对角矩阵求逆                       |
-| 对角化                                | Diagonalization                                                                                | M_Diatri_        | 对角化                                |
-| 求逆                                   | Matrix_Inverse                                                                                 | M_Inverse        | 求逆                                   |
-| 矩阵行(列)调换                     | Swap_Line                                                                                      | M_Swap           | 矩阵行(列)调换                     |
-| 转置                                   | Transpose                                                                                      | M_T              | 转置                                   |
-| 切取部分矩阵                       | Cut_out_part_of_Matrix                                                                         | M_Cut            | 切取部分矩阵                       |
-| 释放内存                             | free_mempry_of_Matrix                                                                          | M_free           | 释放内存                             |
-| 迹                                      | trace                                                                                          | M_tr             | 迹                                      |
-| 行列式                                | Determinant                                                                                    | M_det            | 行列式                                |
-| 填充                                   | Full                                                                                           | M_full           | 填充                                   |
-| 范数                                   | Norm                                                                                           | M_norm           | 范数                                   |
-| 矩阵数乘                             | Number Multiplication                                                                          | M_numul          | 矩阵数乘                             |
-| (使用矩阵)填充矩阵               | Full with matrix                                                                               | M_matFull        | (使用矩阵)填充矩阵               |
-| 生成(全)零矩阵                     | Generation Zeros Matrix                                                                        | M_Zeros          | 生成(全)零矩阵                     |
-| 生成(全)一矩阵                     | Generation Ones Matrix                                                                         | M_Ones           | 生成(全)一矩阵                     |
-| 寻找矩阵对应值位置(列优先)   | Find position with the value in Matrix                                                         | M_find           | 寻找矩阵对应值位置(列优先)   |
-| 矩阵按列求和
-/向量元素和      | Matrix column sum / Vector element sum                                                         | M_sum            | 矩阵按列求和
-/向量元素和      |
-| 矩阵按列最小行位置
-/向量最小元素位置 | Matrix minimum row position / Vector minimum element position                                  | M_min            | 矩阵按列最小行位置
-/向量最小元素位置 |
-| 矩阵按列最大行位置
-/向量最大元素位置 | Matrix maximum row position / Vector maximum element position                                  | M_max            | 矩阵按列最大行位置
-/向量最大元素位置 |
-| 矩阵各列指定行位置的值        | The value of the specified row position 
-of each column of the matrix                          | M_minax_val      | 矩阵各列指定行位置的值        |
-| 矩阵各位置与给定值比较(返回矩阵,取值0/1) | Compare each position of the matrix with the given value
-(return the matrix, the value is 0/1) | M_logic_equal    | 矩阵各位置与给定值比较(返回矩阵,取值0/1) |
-| 两矩阵对应位置逻辑运算        | Logical operation of corresponding positions of two matrices                                   | M_logic          | 两矩阵对应位置逻辑运算        |
-| 矩阵对应元素乘/除                | Multiply / divide corresponding elements of matrix                                             | M_pmuldiv        | 矩阵对应元素乘/除                |
-| 矩阵批量赋值(使用矩阵传递)   | Matrix batch assignment (using matrix transfer)                                                | M_setval         | 矩阵批量赋值(使用矩阵传递)   |
+|                   操作                   	|                                                 OPERATION                                                	|     func_NAME    	|
+|:----------------------------------------:	|:--------------------------------------------------------------------------------------------------------:	|:----------------:	|
+|                 生成矩阵                 	|                                                generation                                                	|    Matrix_gen    	|
+|                 复制矩阵                 	|                                                   copy                                                   	|    Matrix_copy   	|
+|                   乘法                   	|                                                 multiply                                                 	|       M_mul      	|
+|                  加减法                  	|                                                  add/sub                                                 	|     M_add_sub    	|
+|                 矩阵显示                 	|                                                   print                                                  	|      M_print     	|
+|              单位矩阵(生成)              	|                                           identity_matrix(gen)                                           	|        M_I       	|
+|               矩阵基本变换               	|                                          matrix_element_teransf                                          	|     M_E_trans    	|
+|               基本变换矩阵               	|                                           Element_trans2Matrix                                           	|  Etrans_2_Matrix 	|
+|           基本变换矩阵的逆矩阵           	|                                         inv_Element_trans2Matrix                                         	| Etrans_2_Inverse 	|
+|                 上三角化                 	|                                      Upper_triangular_transformation                                     	|     M_Uptri_     	|
+|             上三角化(求逆用)             	|                                Upper_triangular_transformation_for_Inverse                               	|   M_Uptri_4inv   	|
+|                 下三角化                 	|                                      Lower_triangular_transformation                                     	|     M_Lowtri_    	|
+|             下三角化(求逆用)             	|                                Lower_triangular_transformation_for_Inverse                               	|   M_Lowtri_4inv  	|
+|               对角矩阵求逆               	|                                         Matrix_Inv_for_Dia_matrix                                        	|     M_Dia_Inv    	|
+|                  对角化                  	|                                              Diagonalization                                             	|     M_Diatri_    	|
+|                   求逆                   	|                                              Matrix_Inverse                                              	|     M_Inverse    	|
+|              矩阵行(列)调换              	|                                                 Swap_Line                                                	|      M_Swap      	|
+|                   转置                   	|                                                 Transpose                                                	|        M_T       	|
+|               切取部分矩阵               	|                                          Cut_out_part_of_Matrix                                          	|       M_Cut      	|
+|                 释放内存                 	|                                           free_mempry_of_Matrix                                          	|      M_free      	|
+|                    迹                    	|                                                   trace                                                  	|       M_tr       	|
+|                  行列式                  	|                                                Determinant                                               	|       M_det      	|
+|                   填充                   	|                                                   Full                                                   	|      M_full      	|
+|                   范数                   	|                                                   Norm                                                   	|      M_norm      	|
+|                 矩阵数乘                 	|                                           Number Multiplication                                          	|      M_numul     	|
+|            (使用矩阵)填充矩阵            	|                                             Full with matrix                                             	|     M_matFull    	|
+|              生成(全)零矩阵              	|                                          Generation Zeros Matrix                                         	|      M_Zeros     	|
+|              生成(全)一矩阵              	|                                          Generation Ones Matrix                                          	|      M_Ones      	|
+|        寻找矩阵对应值位置(列优先)        	|                                  Find position with the value in Matrix                                  	|      M_find      	|
+|          矩阵按列求和/向量元素和         	|                                  Matrix column sum / Vector element sum                                  	|       M_sum      	|
+|    矩阵按列最小行位置/向量最小元素位置   	|                      Matrix minimum row position /   Vector minimum element position                     	|       M_min      	|
+|    矩阵按列最大行位置/向量最大元素位置   	|                      Matrix maximum row position /   Vector maximum element position                     	|       M_max      	|
+|          矩阵各列指定行位置的值          	|              The value of the specified row   position <br>     of each column of the matrix             	|    M_minax_val   	|
+| 矩阵各位置与给定值比较(返回矩阵,取值0/1) 	| Compare each position of the   matrix with the given value<br>     (return the matrix, the value is 0/1) 	|   M_logic_equal  	|
+|          两矩阵对应位置逻辑运算          	|                      Logical operation of   corresponding positions of two matrices                      	|      M_logic     	|
+|             矩阵对应元素乘/除            	|                            Multiply / divide corresponding elements of matrix                            	|     M_pmuldiv    	|
+|        矩阵批量赋值(使用矩阵传递)        	|                             Matrix batch assignment (using   matrix transfer)                            	|     M_setval     	|
 
 Demo (Matrix_hub)
 ---------------------------------------

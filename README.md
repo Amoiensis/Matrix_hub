@@ -15,6 +15,11 @@ Data:2020.02.12
 https://github.com/Amoiensis/Matrix_hub
 ***************************************************************
 
+具体应用例子：
+
+Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimization-Algorithm
+***************************************************************
+
 具体：
 	
 	Folder_--_lib_.lib文件_+_.h文件

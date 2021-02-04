@@ -73,6 +73,23 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_setval     	|
 |        		帮助	        	|                             			Help File			                            	|     help     	|
 
+
+
+[更新说明 Matrix Hub v1.4]
+---------------------------------------
+1.	新增 help() 函数，可以输入各函数名称，查看具体使用方法；如，help("help")、help("Matrix_gen")、help("README")、help("Update")，等;
+
+
+2. 	新增函数“M_numul_m ()”，用于矩阵数乘 ，矩阵对于矩阵进行操作，各行对应数乘 ；
+
+
+3.	将原 M_matFull() 函数中，最左侧，和最上侧，row_up和column_left取值从“0”设置为“1（_HEAD_）”;
+
+
+4.	修正原代码中"Matirx"的误写，修正为"Matrix";
+
+
+
 Demo (Matrix_hub)
 ---------------------------------------
 code:

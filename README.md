@@ -70,7 +70,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |          两矩阵对应位置逻辑运算          	|                      Logical operation of   corresponding positions of two matrices                      	|      M_logic     	|
 |             矩阵对应元素乘/除            	|                            Multiply / divide corresponding elements of matrix                            	|     M_pmuldiv    	|
 |        矩阵批量赋值(使用矩阵传递)        	|                             Matrix batch assignment (using   matrix transfer)                            	|     M_setval     	|
-|        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_setval     	|
+|        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_numul_m	|
 |        		帮助	        	|                             			Help File			                            	|     help     	|
 
 

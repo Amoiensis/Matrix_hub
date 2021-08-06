@@ -1,7 +1,9 @@
 Matrix_hub
 =======================================
+
 矩阵运算库--C语言
 ---------------------------------------
+
 ##The lib of Matrix operation for C language. (矩阵运算库--C语言) 
 
 Author: Amoiensis
@@ -9,28 +11,35 @@ Author: Amoiensis
 Email: Amoiensis@outlook.com
 
 Data:2020.02.12
+
 ***************************************************************
+
 更多资料和信息：
 
 https://github.com/Amoiensis/Matrix_hub
+
 ***************************************************************
 
 具体应用例子：
 
 Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimization-Algorithm
+
 ***************************************************************
 
 具体：
 	
-	Folder_--_lib_.lib文件_+_.h文件
 
+	Folder_--_lib_.lib文件_+_.h文件
+	
 	Folder_--_code_.c文件_+_.h文件
 
 ***************************************************************
 
 [CONTENT](https://github.com/Amoiensis/Matrix_hub)
 ---------------------------------------
+
 ####（操作-函数）
+
 |                   操作                   	|                                                 OPERATION                                                	|     func_NAME    	|
 |:----------------------------------------:	|:--------------------------------------------------------------------------------------------------------:	|:----------------:	|
 |                 生成矩阵                 	|                                                generation                                                	|    Matrix_gen    	|
@@ -57,6 +66,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimization-Al
 |                  行列式                  	|                                                Determinant                                               	|       M_det      	|
 |                   填充                   	|                                                   Full                                                   	|      M_full      	|
 |                   范数                   	|                                                   Norm                                                   	|      M_norm      	|
+|                   矩阵绝对值                   	|                                                   Absolute Value                                                   	|      M_abs	|
 |                 矩阵数乘                 	|                                           Number Multiplication                                          	|      M_numul     	|
 |            (使用矩阵)填充矩阵            	|                                             Full with matrix                                             	|     M_matFull    	|
 |              生成(全)零矩阵              	|                                          Generation Zeros Matrix                                         	|      M_Zeros     	|
@@ -70,10 +80,32 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimization-Al
 |          两矩阵对应位置逻辑运算          	|                      Logical operation of   corresponding positions of two matrices                      	|      M_logic     	|
 |             矩阵对应元素乘/除            	|                            Multiply / divide corresponding elements of matrix                            	|     M_pmuldiv    	|
 |        矩阵批量赋值(使用矩阵传递)        	|                             Matrix batch assignment (using   matrix transfer)                            	|     M_setval     	|
+|        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_numul_m	|
+|        		帮助	        	|                             			Help File			                            	|     help     	|
+
+
+
+[更新说明 Matrix Hub v1.4]
+---------------------------------------
+
+1.	新增 help() 函数，可以输入各函数名称，查看具体使用方法；如，help("help")、help("Matrix_gen")、help("README")、help("Update")，等;
+
+
+2. 	新增函数“M_numul_m ()”，用于矩阵数乘 ，矩阵对于矩阵进行操作，各行对应数乘 ；
+
+
+3.	将原 M_matFull() 函数中，最左侧，和最上侧，row_up和column_left取值从“0”设置为“1（_HEAD_）”;
+
+
+4.	修正原代码中"Matirx"的误写，修正为"Matrix";
+
+
 
 Demo (Matrix_hub)
 ---------------------------------------
+
 code:
+
 ```
 /*
 %% IMFORMATION
@@ -164,7 +196,11 @@ int main(int argc, char *argv[]) {
 	
 //  Others
 	M_free(_mat_T);
-	
+
+// Help 函数
+	help("help"); 
+	help("Update"); 
+
 	system("pause"); 
 	return 0;
 }
@@ -172,6 +208,7 @@ int main(int argc, char *argv[]) {
 
 ATTENTION
 ---------------------------------------
+
 Please feel free to contact with me for any questions, thank you!
 
 Don't spread the files without permission!
@@ -179,4 +216,5 @@ Don't spread the files without permission!
 所有文件仅仅供学习交流！
 
 未经允许，请勿传播！
+
 ***************************************

@@ -57,6 +57,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |                  行列式                  	|                                                Determinant                                               	|       M_det      	|
 |                   填充                   	|                                                   Full                                                   	|      M_full      	|
 |                   范数                   	|                                                   Norm                                                   	|      M_norm      	|
+|                   矩阵绝对值                   	|                                                   Absolute Value                                                   	|      M_abs	|
 |                 矩阵数乘                 	|                                           Number Multiplication                                          	|      M_numul     	|
 |            (使用矩阵)填充矩阵            	|                                             Full with matrix                                             	|     M_matFull    	|
 |              生成(全)零矩阵              	|                                          Generation Zeros Matrix                                         	|      M_Zeros     	|

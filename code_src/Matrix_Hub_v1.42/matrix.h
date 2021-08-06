@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h> 
+#include <limits.h>
 #include "state.h"
 
 
@@ -64,7 +65,12 @@ typedef struct _matrix_inverse_struct{
 	struct _Elementary_Transformation* _Etrans_head;
 }M_inv_struct;
 
-
+typedef struct _matrix_eigen_struct_single{
+	/*Store the result of matrix_eigen
+	存储求特征值运算的结果*/
+	Matrix* eigen_matrix;
+	MATRIX_TYPE eigen_value;
+}M_eigen_struct_temp;
 
 Matrix* Matrix_gen(int row, int column, MATRIX_TYPE* data);
 Matrix* Matrix_copy(Matrix* _mat_sourse); 
@@ -90,6 +96,7 @@ MATRIX_TYPE M_tr(Matrix* _mat);
 MATRIX_TYPE M_det(Matrix* _mat);
 Matrix* M_full(Matrix* _mat,int row_up,int row_down,int column_left,int column_right,MATRIX_TYPE full_data);
 MATRIX_TYPE M_norm(Matrix* _mat, int Setting);
+Matrix* M_abs(Matrix* _mat_origin); 
 Matrix* M_numul(Matrix* _mat,MATRIX_TYPE _num);
 Matrix* M_matFull(Matrix* _mat,int row_up,int column_left,Matrix* _mat_full);
 Matrix* M_Zeros(int row, int column);
@@ -105,6 +112,7 @@ Matrix* M_logic(Matrix* _mat_left, Matrix* _mat_right,int Operation);
 Matrix* M_pmuldiv(Matrix* _mat_left, Matrix* _mat_right,int operation);
 Matrix* M_setval(Matrix* _mat_ini, Matrix* _mat_val, Matrix* _mat_order, int model);
 Matrix* M_numul_m (Matrix* _mat,Matrix* _mat_multi);
+M_eigen_struct_temp* M_eigen_max(Matrix* _mat);
 
 int help(char* file_name);
 
@@ -800,22 +808,126 @@ MATRIX_TYPE M_norm(Matrix* _mat, int Setting) {/*Caculate Matrix norm-num
 	int column = _mat->column;
 	MATRIX_TYPE Val_norm = 0;
 	int i,j;
-	if (Setting == 2){
-		for (i = 0; i<row; i++) {
-			for (j = 0; j<column; j++){
-				Val_norm += data[i*(column)+j]*data[i*(column)+j];
+	if(row==_ONE_||column==_ONE_){/*向量的范数*/
+		switch(Setting){
+			case 1:{/*向量的1范数*/ 
+				for (i = 0; i<row; i++) {
+					for (j = 0; j<column; j++){
+						/*使用abs()会提示，error C2668: “abs”: 对重载函数的调用不明确
+						转而使用fabs().*/
+						Val_norm += fabs(data[i*(column)+j]);
+					}
+				}
+				break;
 			}
-		}
+			case 2:{/*向量的2范数*/ 
+				for (i = 0; i<row; i++) {
+					for (j = 0; j<column; j++){
+						Val_norm += data[i*(column)+j]*data[i*(column)+j];
+					}
+				}
+				Val_norm = pow(Val_norm,0.5);
+				break;
+			}
+			case INF:{/*向量的∞(inf)无穷范数*/ 
+				Matrix* M_temp_0,*M_temp_1;
+				M_temp_0 = M_abs(_mat);
+				M_temp_1 = M_max(M_temp_0);
+				int temp_num = M_temp_1->data[0];
+				Val_norm = (M_temp_0)->data[temp_num];
+				M_free(M_temp_0);
+				M_free(M_temp_1);
+				break;
+			}
+			default:{/*向量的p范数*/ 
+				for (i = 0; i<row; i++) {
+					for (j = 0; j<column; j++){
+						Val_norm += pow(data[i*(column)+j],Setting);
+					}
+				}
+				if (Val_norm<0){
+					printf(M_norm_warm_01);
+				}
+				Val_norm = pow(Val_norm,1.0/Setting);
+				break;
+			}
+		}		
 	}else{
-		for (i = 0; i<row; i++) {
-			for (j = 0; j<column; j++){
-				/*使用abs()会提示，error C2668: “abs”: 对重载函数的调用不明确
-				转而使用fabs().*/
-				Val_norm += fabs(data[i*(column)+j]);
+		/*矩阵范数*/
+		switch(Setting){
+			case 1:{/*矩阵的1范数*/ 
+				Matrix* M_temp_0,*M_temp_1,* M_temp_2;
+				M_temp_0 = M_abs(_mat);
+				M_temp_1 = M_sum(M_temp_0);
+				M_temp_2 = M_max(M_temp_1);
+				int temp_num = M_temp_2->data[0];
+				Val_norm = (M_temp_1)->data[temp_num];
+				M_free(M_temp_0);
+				M_free(M_temp_1);
+				M_free(M_temp_2);
+				break;
 			}
-		}
+			case 2:{/*矩阵的2范数*/ 
+				Matrix* M_temp_0,*M_temp_1;
+				M_temp_0 = M_T(_mat);
+				M_temp_1 = M_mul(M_temp_0,_mat);
+				M_eigen_struct_temp* M_temp_1_eigen = M_eigen_max(M_temp_1);
+				Val_norm = M_temp_1_eigen->eigen_value;
+				M_free(M_temp_0);
+				M_free(M_temp_1);
+				free(M_temp_1_eigen);
+				break;
+			}
+			case INF:{/*矩阵的∞(inf)无穷范数*/ 
+				Matrix* M_temp_0,*M_temp_1,* M_temp_2,* M_temp_;
+				M_temp_ = M_T(_mat);
+				M_print(M_temp_);
+				M_temp_0 = M_abs(M_temp_);
+				M_print(M_temp_0);
+				M_temp_1 = M_sum(M_temp_0);
+				M_print(M_temp_1);
+				M_temp_2 = M_max(M_temp_1);
+				M_print(M_temp_2);
+				int temp_num = M_temp_2->data[0];
+				Val_norm = (M_temp_1)->data[temp_num];
+				M_free(M_temp_);
+				M_free(M_temp_0);
+				M_free(M_temp_1);
+				M_free(M_temp_2);
+				break;
+			}
+			case FRO:{/*矩阵的F范数（Frobenius范数）*/
+				 for (i = 0; i<row; i++) {
+					for (j = 0; j<column; j++){
+						Val_norm += data[i*(column)+j]*data[i*(column)+j];
+					}
+				}
+				Val_norm = pow(Val_norm,0.5);
+				break;
+			}
+			default:{
+				printf(M_norm_022);
+				system("pause");
+				break;
+			}	
+		}			
 	}
 	return Val_norm;
+}
+
+Matrix* M_abs(Matrix* _mat_origin){/*Matrix Taking Absolute Value
+	矩阵所有元素取绝对值*/
+	Matrix* _mat = (Matrix*)malloc(sizeof(Matrix));
+	_mat->row = _mat_origin->row;
+	_mat->column = _mat_origin->column;
+	int size = _mat->row*_mat->column;
+	_mat->data = (MATRIX_TYPE*)malloc((size) * sizeof(MATRIX_TYPE));
+	int i;
+	for (i = 0; i<size; i++) {
+		_mat->data[i] = abs(_mat_origin->data[i]);
+	}
+	
+	return _mat;
 }
 
 Matrix* M_numul(Matrix* _mat,MATRIX_TYPE _num){/*Matrix Multiply
@@ -1185,4 +1297,40 @@ Matrix* M_numul_m(Matrix* _mat,Matrix* _mat_multi){/*Matrix Multiply
 		}
 	}
 	return _mat;	
+}
+
+M_eigen_struct_temp* M_eigen_max(Matrix* _mat){	/*Matrix Max Eigenvalue(vec)
+	求解矩阵最大特征值（幂法） 
+	_mat_result = Max_eigenvalue(_mat) 
+	幂法-算法参考：https://max.book118.com/html/2017/0527/109650252.shtm*/
+	M_eigen_struct_temp* M_eigen_max = NULL;
+	if (_mat->column == _mat->row){
+		Matrix *mat_z = M_Ones(_mat->column,1), *mat_temp_1 = NULL, *mat_temp_2 = NULL;
+		Matrix *mat_y = NULL, *mat_z_gap = NULL;
+		MATRIX_TYPE m_value = 0 ,mat_z_gap_norm = 1;
+		MATRIX_TYPE deta = 0.001; //精度设置 
+		int temp_num = 0;
+		
+		while(mat_z_gap_norm>deta){
+			mat_y = M_mul(_mat,mat_z);
+			mat_temp_1 = M_max(mat_y);//需要释放结果空间 
+			temp_num = ((mat_temp_1)->data[0]);
+			m_value = mat_y->data[temp_num];
+			mat_temp_2 = mat_z;//需要释放结果空间
+			mat_z = M_numul(mat_y,1/m_value);
+			mat_z_gap = M_add_sub(1,mat_z,1,mat_temp_2);//需要释放结果空间 
+			mat_z_gap_norm = M_norm(mat_z_gap,1);
+			M_free(mat_temp_1);
+			M_free(mat_temp_2);
+			M_free(mat_z_gap);
+		}
+		
+		M_eigen_max = (M_eigen_struct_temp*)malloc(sizeof(M_eigen_struct_temp));
+		M_eigen_max->eigen_value = m_value;
+		M_eigen_max->eigen_matrix = mat_z;		
+	}else{
+		printf(M_eigen_max_021);
+		system("pause");
+	} 
+	return M_eigen_max;
 }

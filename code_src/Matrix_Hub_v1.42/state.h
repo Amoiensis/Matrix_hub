@@ -26,6 +26,10 @@
 #define _ORD4INI_ 1
 #define _ORD4VAL_ -1
 
+#define INF INT_MAX
+#define FRO INT_MIN
+ 
+
 /*ERROR TABLE*/ 
 #define M_mul_001	 	"@ERROR: Matrix_Dimensions Wrong!\n\tDetails:(M_mul_001)_mat_left->column != _mat_right->row\n"
 #define M_Dia_Inv_002 	"@ERROR: Matrix_Dimensions Wrong!\n\tDetails:(M_Dia_Inv_002)_mat_left->column != _mat_right->row\n"
@@ -47,4 +51,8 @@
 #define M_setval_018 	"@ERROR: Mat_order lager than Mat_ini !\n\tDetails:(M_setval_018)Mat_order_Size_Wrong !\n"
 #define M_setval_019 	"@ERROR: Mat_order lager than Mat_val !\n\tDetails:(M_setval_019)Mat_order_Size_Wrong !\n"
 #define M_setval_020	"@ERROR: Mat_ini lager than Mat_order !\n\tDetails:(M_setval_020)Mat_ini_Size_Wrong !\n"
+#define M_eigen_max_021	"@ERROR: Matrix_Dimensions Wrong!\n\tDetails:(M_eigen_max_021)Mat->column != Mat->row!\n\t\t(For eigen, the Matrix must be a square matrix!)\n"
+#define M_norm_022		"@ERROR: M_norm Wrong!\n\tThe Norm-Setting should be 1/2/INF/p for Vector and 1/2/INF/FRO for Matrix!\n"
 
+/*WARNING TABLE*/ 
+#define M_norm_warm_01		"@WARNING: ||A||_p = sum((a_ij)^p)^(1/p)\n\tFor matrix's p-normvalue, the result can not be a complex number! (e.g. A+Bi)\n"

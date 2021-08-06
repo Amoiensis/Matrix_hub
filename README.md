@@ -23,7 +23,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 具体：
 	
 	Folder_--_lib_.lib文件_+_.h文件
-
+	
 	Folder_--_code_.c文件_+_.h文件
 
 ***************************************************************
@@ -74,10 +74,15 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_numul_m	|
 |        		帮助	        	|                             			Help File			                            	|     help     	|
 
+## [更新说明] 
 
+#### [Matrix Hub v1.42] 2021.08.06
 
-[更新说明 Matrix Hub v1.4]
----------------------------------------
+1. 新增求解矩阵最大特征值函数:M_eigen_max()，可使用help("M_eigen_max")查看具体使用；
+2. 新增矩阵取绝对值函数 M_abs()，可使用help("M_abs")查看具体使用；
+3. 完善向量和矩阵的各种范数运算M_norm()：新增1范数(1)、2范数(2)、无穷范数(INF)、F范数（FRO）等方法，修正了矩阵二范数计算错误的问题,可使用help("M_norm")查看具体使用；
+
+#### [Matrix Hub v1.4] 2021.02.02
 1.	新增 help() 函数，可以输入各函数名称，查看具体使用方法；如，help("help")、help("Matrix_gen")、help("README")、help("Update")，等;
 
 
@@ -203,4 +208,5 @@ Don't spread the files without permission!
 所有文件仅仅供学习交流！
 
 未经允许，请勿传播！
+
 ***************************************

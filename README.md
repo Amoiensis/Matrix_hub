@@ -41,7 +41,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |              单位矩阵(生成)              	|                                           identity_matrix(gen)                                           	|        M_I       	|
 |               矩阵基本变换               	|                                          matrix_element_teransf                                          	|     M_E_trans    	|
 |               基本变换矩阵               	|                                           Element_trans2Matrix                                           	|  Etrans_2_Matrix 	|
-|           基本变换矩阵的逆矩阵           	|                                         inv_Element_trans2Matrix                                         	| Etrans_2_Inverse 	|
+|           基本变换矩阵的逆矩阵           	|                                         inv_Element_trans2Matrix                                         	| Etrans_4_Inverse 	|
 |                 上三角化                 	|                                      Upper_triangular_transformation                                     	|     M_Uptri_     	|
 |             上三角化(求逆用)             	|                                Upper_triangular_transformation_for_Inverse                               	|   M_Uptri_4inv   	|
 |                 下三角化                 	|                                      Lower_triangular_transformation                                     	|     M_Lowtri_    	|
@@ -75,6 +75,18 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |        		帮助	        	|                             			Help File			                            	|     help     	|
 
 ## [更新说明] 
+
+#### [Matrix Hub v1.43] 2021.10.26
+
+1. 更新矩阵求逆算法，所有基于求逆的运算速度提升，更新"M_Inverse"函数；
+
+2. 修复初等变换的内存问题，程序运行内存占用减少；
+
+3. 删除“Etrans_2_Inverse”函数；新增“Etrans_4_Inverse”函数，用于加速矩阵求逆；
+
+4. 更新“M_Uptri_4inv”、“M_Lowtri_4inv”用于加速矩阵求逆；
+
+  **注意：**推荐更新到最新的Matrix Hub v1.43代替v1.42及之前版本，本次更新内存和计算速度都得到提高；
 
 #### [Matrix Hub v1.42] 2021.08.06
 
@@ -144,8 +156,6 @@ int main(int argc, char *argv[]) {
 	// 初等变换to矩阵 
 	Matirx* mat_4 = Etrans_2_Matrix(&_Etrans_,5,_ROW_);
 	M_print(mat_4);
-	Matirx* mat_5 = Etrans_2_Inverse(&_Etrans_,5,_ROW_);
-	M_print(mat_5);
 	// 上三角变换
 	Uptri_struct* _Uptri_ =  M_Uptri_(mat_21);
 	M_print(_Uptri_->trans_matrix );

@@ -28,8 +28,44 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 
 ***************************************************************
 
+## [[更新说明]](https://github.com/Amoiensis/Matrix_hub) 
+
+#### [Matrix Hub v1.43] 2021.10.26
+
+1. 更新矩阵求逆算法，所有基于求逆的运算速度提升，更新"M_Inverse"函数；
+
+2. 修复初等变换的内存问题，程序运行内存占用减少；
+
+3. 删除“Etrans_2_Inverse”函数；新增“Etrans_4_Inverse”函数，用于加速矩阵求逆；
+
+4. 更新“M_Uptri_4inv”、“M_Lowtri_4inv”用于加速矩阵求逆；
+
+   **注意**：推荐更新到最新的Matrix Hub v1.43代替v1.42及之前版本，本次更新内存和计算速度都得到提高；
+
+#### [Matrix Hub v1.42] 2021.08.06
+
+1. 新增求解矩阵最大特征值函数:M_eigen_max()，可使用help("M_eigen_max")查看具体使用；
+2. 新增矩阵取绝对值函数 M_abs()，可使用help("M_abs")查看具体使用；
+3. 完善向量和矩阵的各种范数运算M_norm()：新增1范数(1)、2范数(2)、无穷范数(INF)、F范数（FRO）等方法，修正了矩阵二范数计算错误的问题,可使用help("M_norm")查看具体使用；
+
+#### [Matrix Hub v1.4] 2021.02.02
+
+1.	新增 help() 函数，可以输入各函数名称，查看具体使用方法；如，help("help")、help("Matrix_gen")、help("README")、help("Update")，等;
+
+
+2. 	新增函数“M_numul_m ()”，用于矩阵数乘 ，矩阵对于矩阵进行操作，各行对应数乘 ；
+
+
+3.	将原 M_matFull() 函数中，最左侧，和最上侧，row_up和column_left取值从“0”设置为“1（_HEAD_）”;
+
+
+4.	修正原代码中"Matirx"的误写，修正为"Matrix";
+
+
+
 [CONTENT](https://github.com/Amoiensis/Matrix_hub)
 ---------------------------------------
+
 ####（操作-函数）
 |                   操作                   	|                                                 OPERATION                                                	|     func_NAME    	|
 |:----------------------------------------:	|:--------------------------------------------------------------------------------------------------------:	|:----------------:	|
@@ -73,38 +109,6 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |        矩阵批量赋值(使用矩阵传递)        	|                             Matrix batch assignment (using   matrix transfer)                            	|     M_setval     	|
 |        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_numul_m	|
 |        		帮助	        	|                             			Help File			                            	|     help     	|
-
-## [更新说明] 
-
-#### [Matrix Hub v1.43] 2021.10.26
-
-1. 更新矩阵求逆算法，所有基于求逆的运算速度提升，更新"M_Inverse"函数；
-
-2. 修复初等变换的内存问题，程序运行内存占用减少；
-
-3. 删除“Etrans_2_Inverse”函数；新增“Etrans_4_Inverse”函数，用于加速矩阵求逆；
-
-4. 更新“M_Uptri_4inv”、“M_Lowtri_4inv”用于加速矩阵求逆；
-
-  **注意**：推荐更新到最新的Matrix Hub v1.43代替v1.42及之前版本，本次更新内存和计算速度都得到提高；
-
-#### [Matrix Hub v1.42] 2021.08.06
-
-1. 新增求解矩阵最大特征值函数:M_eigen_max()，可使用help("M_eigen_max")查看具体使用；
-2. 新增矩阵取绝对值函数 M_abs()，可使用help("M_abs")查看具体使用；
-3. 完善向量和矩阵的各种范数运算M_norm()：新增1范数(1)、2范数(2)、无穷范数(INF)、F范数（FRO）等方法，修正了矩阵二范数计算错误的问题,可使用help("M_norm")查看具体使用；
-
-#### [Matrix Hub v1.4] 2021.02.02
-1.	新增 help() 函数，可以输入各函数名称，查看具体使用方法；如，help("help")、help("Matrix_gen")、help("README")、help("Update")，等;
-
-
-2. 	新增函数“M_numul_m ()”，用于矩阵数乘 ，矩阵对于矩阵进行操作，各行对应数乘 ；
-
-
-3.	将原 M_matFull() 函数中，最左侧，和最上侧，row_up和column_left取值从“0”设置为“1（_HEAD_）”;
-
-
-4.	修正原代码中"Matirx"的误写，修正为"Matrix";
 
 
 

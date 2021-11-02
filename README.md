@@ -40,7 +40,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 
 4. 更新“M_Uptri_4inv”、“M_Lowtri_4inv”用于加速矩阵求逆；
 
-   **注意**：推荐更新到最新的Matrix Hub v1.43代替v1.42及之前版本，本次更新内存和计算速度都得到提高；
+   **注意**：推荐目前请使用 [Matrix Hub v1.42]v1.42版本，本次更新内存和计算速度都得到提高，但是存在一些稳定性问题，正在修复。
 
 #### [Matrix Hub v1.42] 2021.08.06
 

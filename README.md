@@ -30,6 +30,22 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 
 ## [[更新说明]](https://github.com/Amoiensis/Matrix_hub) 
 
+#### [Matrix Hub v1.44] 2022.04.28
+
+1. 新增函数 矩阵求秩: M_rank (matrix.h);
+
+2. 新增函数 Etrans_free, 实现 M_rank 初等变换内存释放; 详见 help("Etrans_free"), (matrix.h)
+
+3. 新增希尔伯特矩阵(病态矩阵)生成: Hilbert (matrix.h);
+
+4. 新增矩阵不可逆报错, Error: M_Dia_Inv_023: "@ERROR: Matrix is not invertible!" (state.h);
+
+5. 已修复 v1.43 计算不稳定问题;
+
+   **注意**：推荐目前请使用 [Matrix Hub v1.44] 版本，本次更新内存和计算速度都得到提高，已修复v1.43稳定性问题。
+
+
+
 #### [Matrix Hub v1.43] 2021.10.26
 
 1. 更新矩阵求逆算法，所有基于求逆的运算速度提升，更新"M_Inverse"函数；
@@ -108,6 +124,9 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |             矩阵对应元素乘/除            	|                            Multiply / divide corresponding elements of matrix                            	|     M_pmuldiv    	|
 |        矩阵批量赋值(使用矩阵传递)        	|                             Matrix batch assignment (using   matrix transfer)                            	|     M_setval     	|
 |        矩阵对矩阵，对各行进行数乘        	|                             Matrix Number Multiplication (using matrix transfer)                            	|     M_numul_m	|
+| 矩阵求秩 | Rank of Matrix | M_rank	|
+| 生成希尔伯特矩阵 | Generate Hilbert Matrix | Hilbert	|
+| (函数: M_rank) 释放初等变换内存空间 | (func: M_rank) free memory for Elementary_Transformation | Etrans_free	|
 |        		帮助	        	|                             			Help File			                            	|     help     	|
 
 
@@ -122,10 +141,10 @@ code:
 % Author: Xiping Yu
 % Email:Amoiensis@outlook.com
 % Github: https://github.com/Amoiensis/Matrix_hub
-% Data: 2020.02.24 
+% Data: 2020.02.12 
 % Case: Matrix Operation 
 % Dtailed: the code_file of Matrix_hub
-*/ 
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -133,84 +152,104 @@ code:
 
 
 int main(int argc, char *argv[]) {
-	system("color 0F");
+    system("color 0F");
+
 // Matrix
-	//	Mat_1
-	
-	...
-	
+    //	Mat_1
+    ...
+    [ 具体见 demo.c ]
+
 //	Operation
-	// 乘法 
-	Matirx*  mat_3 = M_mul(mat_2,mat_1);
-	M_print(mat_3);	
-	// 加减法
-	Matirx*  mat_diff = M_add_sub(1,mat_21,1,mat_21b);
-	M_print(mat_diff);	
-	// 初等变换 
-	Etrans_struct _Etrans_;
-	_Etrans_.minuend_line = 2;
-	_Etrans_.subtractor_line = 1;
-	_Etrans_.scale = 2;
-	_Etrans_.next_E_trans = NULL;
-	_Etrans_.forward_E_trans = NULL;
-	M_E_trans(mat_2,&_Etrans_,_ROW_);
-	M_print(mat_2);
-	// 单位矩阵 
-	M_print(M_I(5));
-	// 初等变换to矩阵 
-	Matirx* mat_4 = Etrans_2_Matrix(&_Etrans_,5,_ROW_);
-	M_print(mat_4);
-	// 上三角变换
-	Uptri_struct* _Uptri_ =  M_Uptri_(mat_21);
-	M_print(_Uptri_->trans_matrix );
-	M_print(_Uptri_->Uptri_matrix);
-	// 下三角变换
-	Lowtri_struct* _Lowtri_ =  M_Lowtri_(mat_21);
-	M_print(_Lowtri_->Lowtri_matrix);
-	M_print(_Lowtri_->trans_matrix);
-	// 对角化
-	Dia_struct* _Dia_ = M_Diatri_(mat_21);
-	M_print(_Dia_->trans_leftmatrix);
-	M_print(_Dia_->Diatri_matrix);
-	M_print(_Dia_->trans_rightmatrix);
-	// 矩阵求逆 
-	Matirx* _mat_inv = M_Inverse(mat_21);
-	M_print(_mat_inv );
-	// 行列交换
-	M_Swap(_mat_inv,1,2,_ROW_);
-	M_print(_mat_inv); 
-	// 切割部分
-	Matirx* _mat_cut = M_Cut(_mat_inv,_END_,_END_,2,3);
-	M_print(_mat_cut);
-	// 转置
-	Matirx* _mat_T = M_T(_mat_inv);
-	M_print(_mat_T);
-	// 迹
-	MATRIX_TYPE _tr_mat = M_tr(_mat_inv);
-	printf("Tr(Matrix_%x) = %.4lf\n",_mat_inv,_tr_mat);
-	// 行列式
-	MATRIX_TYPE _det_mat = M_det(_mat_inv);
-	printf("Det(Matrix_%x) = %.4lf\n",mat_21,_det_mat);
-	// 填充
-	Matirx* mat_full = M_full(mat_2,1,1,1,1,0);
-	M_print(mat_full);
+    // 乘法
+    Matrix *mat_3 = M_mul(mat_2, mat_1);
+    M_print(mat_3);
+    // 加减法
+    Matrix *mat_diff = M_add_sub(1, mat_21, 1, mat_21b);
+    M_print(mat_diff);
+    // 初等变换
+    Etrans_struct _Etrans_;
+    _Etrans_.minuend_line = 2;
+    _Etrans_.subtractor_line = 1;
+    _Etrans_.scale = 2;
+    _Etrans_.next_E_trans = NULL;
+    _Etrans_.forward_E_trans = NULL;
+    M_E_trans(mat_2, &_Etrans_, _ROW_);
+    M_print(mat_2);
+    // 单位矩阵
+    M_print(M_I(5));
+    // 初等变换to矩阵
+    Matrix *mat_4 = Etrans_2_Matrix(&_Etrans_, 5, _ROW_);
+    M_print(mat_4);
+    // 上三角变换
+    Uptri_struct *_Uptri_ = M_Uptri_(mat_21);
+    M_print(_Uptri_->trans_matrix);
+    M_print(_Uptri_->Uptri_matrix);
+    // 下三角变换
+    Lowtri_struct *_Lowtri_ = M_Lowtri_(mat_21);
+    M_print(_Lowtri_->Lowtri_matrix);
+    M_print(_Lowtri_->trans_matrix);
+    // 对角化
+    Dia_struct *_Dia_ = M_Diatri_(mat_21);
+    M_print(_Dia_->trans_leftmatrix);
+    M_print(_Dia_->Diatri_matrix);
+    M_print(_Dia_->trans_rightmatrix);
+    // 矩阵求逆
+    Matrix *_mat_inv = M_Inverse(mat_21);
+    M_print(_mat_inv);
+    // 行列交换
+    M_Swap(_mat_inv, 1, 2, _ROW_);
+    M_print(_mat_inv);
+    // 切割部分
+    Matrix *_mat_cut = M_Cut(_mat_inv, _END_, _END_, 2, 3);
+    M_print(_mat_cut);
+    // 转置
+    Matrix *_mat_T = M_T(_mat_inv);
+    M_print(_mat_T);
+    // 迹
+    MATRIX_TYPE _tr_mat = M_tr(_mat_inv);
+    printf("Tr(Matrix_%x) = %.4lf\n", _mat_inv, _tr_mat);
+    // 行列式
+    MATRIX_TYPE _det_mat = M_det(_mat_inv);
+    printf("Det(Matrix_%x) = %.4lf\n", mat_21, _det_mat);
+    // 填充
+    Matrix *mat_full = M_full(mat_2, 1, 1, 1, 1, 0);
+    M_print(mat_full);
+    // 范数
+    printf("NORM1 = %lf\n", M_norm(mat_b, 1));
+    printf("NORM2 = %lf\n", M_norm(mat_b, 2));
+    // 秩
+    printf("Rank(%x) = %d\n", mat_A10, M_rank(mat_A10));
+    printf("Rank(%x) = %d\n", mat_full, M_rank(mat_full));
+    // Hilbert 希尔伯特矩阵
+    printf(">> Gen Hilbert-Matrix\n");
+    M_print(Hilbert(5));
+
 // Application
-	// 解线性方程
-		// mat_A*x = mat_b
-	printf("#Solver:mat_A*x = mat_b\n");
-	Matirx* _mat_result = M_mul(M_Inverse(mat_A10),mat_b10);
-	M_print(_mat_result);
-	
+    // 解线性方程
+    // mat_A*x = mat_b
+    printf("#Solver:mat_A*x = mat_b\n");
+    Matrix *_mat_result = M_mul(M_Inverse(mat_A10), mat_b10);
+    M_print(_mat_result);
+    // 测试 Hilbert 希尔伯特矩阵(病态矩阵)
+    // Hilbert(n)*x = One(n,1)
+    int order = 10;
+    printf("#Solver:Hilbert(%d)*x = One(%d,1)\n", order, order);
+    M_print(M_mul(M_Inverse(Hilbert(order)), M_Ones(order,1)));
+    // 测试希尔伯特矩阵的秩
+    printf("Rank(Hilbert(n)) = %d\n", M_rank(Hilbert(5)));
+
 //  Others
-	M_free(_mat_T);
+    M_free(_mat_T);
 
 // Help 函数
-	help("help"); 
-	help("Update"); 
+    help("help");
+    help("M_rank");
+    help("Update");
 
-	system("pause"); 
-	return 0;
+    system("pause");
+    return 0;
 }
+
 ```
 
 ATTENTION

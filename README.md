@@ -8,7 +8,7 @@ Author: Amoiensis
 
 Email: Amoiensis@outlook.com
 
-Data: 2020.02.12~2022.04.28
+Data: 2020.02.12~2022.04.29
 ***************************************************************
 更多资料和信息：
 
@@ -30,6 +30,15 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 
 ## [[更新说明]](https://github.com/Amoiensis/Matrix_hub) 
 
+#### [Matrix Hub v1.50] 2022.04.29
+
+1. 新增函数, 矩阵求条件数 M_cond (matrix.h);
+2. 进一步克服 v1.44 内存问题, 完善内存管理, 可使用 help("Memory_Manager") 查看;
+
+​	**注意**：本次更新内存管理大幅改善，已修复v1.4x内存问题。
+
+
+
 #### [Matrix Hub v1.44] 2022.04.28
 
 1. 新增函数 矩阵求秩: M_rank (matrix.h);
@@ -42,7 +51,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 
 5. 已修复 v1.43 计算不稳定问题;
 
-   **注意**：推荐目前请使用 [Matrix Hub v1.44] 版本，本次更新内存和计算速度都得到提高，已修复v1.43稳定性问题。
+   **注意**：本次更新内存和计算速度都得到提高，已修复v1.43稳定性问题。
 
 
 
@@ -127,6 +136,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 | 矩阵求秩 | Rank of Matrix | M_rank	|
 | 生成希尔伯特矩阵 | Generate Hilbert Matrix | Hilbert	|
 | (函数: M_rank) 释放初等变换内存空间 | (func: M_rank) free memory for Elementary_Transformation | Etrans_free	|
+| 矩阵求条件数 | Conditon Num of Matrix | M_cond	|
 |        		帮助	        	|                             			Help File			                            	|     help     	|
 
 
@@ -223,6 +233,8 @@ int main(int argc, char *argv[]) {
     // Hilbert 希尔伯特矩阵
     printf(">> Gen Hilbert-Matrix\n");
     M_print(Hilbert(5));
+    // 求条件数
+    printf("条件数为: %lf\n", M_cond(Hilbert(5),1));
 
 // Application
     // 解线性方程

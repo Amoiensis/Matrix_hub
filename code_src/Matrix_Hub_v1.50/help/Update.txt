@@ -5,8 +5,12 @@ Matrix_Hub
 ---------------------------------------
 Author: Amoiensis
 Email: Amoiensis@outlook.com
-Data: 2020.02.12～2022.04.28
+Data: 2020.02.12～2022.04.29
 ***************************************************************
+[更新说明v1.5] 2022.04.29
+1. 新增函数, 矩阵求条件数 M_cond (matrix.h);
+2. 进一步克服 v1.44 内存问题, 完善内存管理, 可使用 help("Memory_Manager") 查看;
+
 [更新说明v1.44] 2022.04.28
 1. 新增矩阵不可逆报错, Error: M_Dia_Inv_023: "@ERROR: Matrix is not invertible!" (state.h);
 2. 新增函数 矩阵求秩: M_rank (matrix.h);

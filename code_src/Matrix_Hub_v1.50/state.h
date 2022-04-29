@@ -55,7 +55,7 @@
 #define M_norm_022        "@ERROR: M_norm Wrong!\n\t Details:(M_norm_022)The Norm-Setting should be 1/2/INF/p for Vector and 1/2/INF/FRO for Matrix!\n"
 #define M_Dia_Inv_023    "@ERROR: Matrix is not invertible!\n\t Details:(M_Dia_Inv_023)Please Check: Inverse element of Dia == 0! \n"
 #define M_cond_024    "@ERROR: M_cond Wrong! \n\t Details:(M_cond_024) Matrix should be Square-Matrix! _mat_left->row != _mat_right->row \n"
-#define M_cond_025    "@ERROR: M_cond Wrong!\n\t Details:(M_cond_024) M_cond (mat, int Setting <<-- should be 1/2/INF/FRO) \n"
+#define M_cond_025    "@ERROR: M_cond Wrong!\n\t Details:(M_cond_025) M_cond (mat, int Setting <<-- should be 1/2/INF/FRO) \n"
 
 
 /*WARNING TABLE*/

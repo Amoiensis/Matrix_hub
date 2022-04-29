@@ -35,7 +35,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 1. 新增函数, 矩阵求条件数 M_cond (matrix.h);
 2. 进一步克服 v1.44 内存问题, 完善内存管理, 可使用 help("Memory_Manager") 查看;
 
-​	**注意**：本次更新内存管理大幅改善，已修复v1.4x内存问题。
+   **注意**：本次更新内存管理大幅改善，已修复v1.4x内存问题。
 
 
 

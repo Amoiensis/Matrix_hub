@@ -57,7 +57,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
    
    3 - M_free/ M_mul/ M_full/ M_Inverse/ M_rank/ M_mul / M_Uptri_/ M_Lowtri_/ M_Diatri_/ M_print ;  
    
-3. 解决求逆运算中存在的问题(感谢@1u2e): 结构体释放问题、一维矩阵求逆;
+3. 解决求逆运算中存在的问题(感谢[@1u2e](https://github.com/1u2e)): 结构体释放问题、一维矩阵求逆;
     详见：https://github.com/Amoiensis/Matrix_hub/issues/4
 4. 本版本已完成内存测试，目前测试后暂无内存泄漏问题；
 5. 更新"README", 参考"功能表"中 OPERATION 列, 如返回值为新开辟空间则标记有 "create", 用于提供内存管理的参考,

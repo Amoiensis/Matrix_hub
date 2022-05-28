@@ -239,6 +239,9 @@ int main(int argc, char *argv[]) {
 
 
 2. 新增 运算过程的"显示详细等级"(The Level of Details of Output).
+
+   位置: _DETAILED_ (state.h)
+   
    档位: 0/1/2/3 四等级: 0->3 逐渐详细 ( 默认设置为 2级)
 
    **level - 显示详情的函数**  

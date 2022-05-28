@@ -434,30 +434,7 @@ Matrix *Etrans_4_Inverse(Matrix *_mat_result, Etrans_struct *_Etrans_, int line_
 	基本变换转矩阵的转置*/
     Etrans_struct *temp_Etrans = _Etrans_, *temp_Etrans_pre = _Etrans_;
     int temp_num = 0;
-//    do {
-//        temp_num = temp_Etrans->minuend_line;
-//        temp_Etrans->minuend_line = temp_Etrans->subtractor_line;
-//        temp_Etrans->subtractor_line = temp_num;
-//        M_E_trans(_mat_result, temp_Etrans, line_setting);
-////        1. 内存泄漏的方案；
-////        temp_Etrans = temp_Etrans->forward_E_trans;
-////        if (temp_Etrans != NULL) {
-////            free(temp_Etrans->next_E_trans);
-////        }
-////        2. 尝试的方案;
-////        if (temp_Etrans->forward_E_trans != NULL) {
-////            temp_Etrans = temp_Etrans->forward_E_trans;
-////            free(temp_Etrans->next_E_trans);
-////        }else{
-////            free(temp_Etrans);
-////            temp_Etrans = NULL;
-////        }
-////        3. 建议的方案
-//        // 此处方案感谢 @1u2e, github.com/Amoiensis/Matrix_hub/issues/4
-//        temp_Etrans = temp_Etrans->forward_E_trans;
-//        free(temp_Etrans_pre);
-//        temp_Etrans_pre = temp_Etrans;
-//    } while (temp_Etrans != NULL);
+    // 此处方案感谢 @1u2e, github.com/Amoiensis/Matrix_hub/issues/4
     while (temp_Etrans != NULL) {
         temp_num = temp_Etrans->minuend_line;
         temp_Etrans->minuend_line = temp_Etrans->subtractor_line;

@@ -33,6 +33,7 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 #### [Matrix Hub v1.51] 2022.05.28
 
 1. 新增函数, 详情见下表 M_eigen_max/ householder/ M_householder/ M_QR/ M_eigen_val;
+
 |                操作                |   Func Name   |                     Operation (detailed)                     |
 | :--------------------------------: | :-----------: | :----------------------------------------------------------: |
 |      矩阵最大特征值、特征向量      |  M_eigen_max  | The maximum eigenvalue/ eigen-vector of the Matrix (create). |
@@ -41,6 +42,8 @@ Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimizat
 |             矩阵QR分解             |     M_QR      |                  QR Decomposition (create).                  |
 |             矩阵特征值             |  M_eigen_val  |           The eigenvalues of the Matrix (create).            |
 | 矩阵特征值, 及其对应特征向量(矩阵) |    M_eigen    |  The eigenvalues and eigen-vectors of the Matrix (create).   |
+
+
 2. 新增 运算过程的"显示详细等级"(The Level of Details of Output).
    档位: 0/1/2/3 四等级: 0->3 逐渐详细 ( 默认设置为 2级)
    **level - 显示详情的函数**

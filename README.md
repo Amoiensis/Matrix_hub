@@ -1,6 +1,4 @@
 ![MatrixHub_logo](https://github.com/Amoiensis/Matrix_hub/blob/master/docs/img/MatrixHub_logo.png)
-<img src="https://github.com/Amoiensis/Matrix_hub/blob/master/docs/img/MatrixHub_logo.png" alt="MatrixHub_logo" style="zoom:75%;" />
-
 Matrix_hub
 =======================================
 矩阵运算库--C语言

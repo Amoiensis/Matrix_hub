@@ -108,7 +108,7 @@ Demo.c (Matrix_hub)
     AUTHOR: Xiping.Yu
     E-MAIL: Amoiensis@outlook.com
     GITHUB: https://github.com/Amoiensis/Matrix_hub
-    DATE: 2020.02.12-2022.08.21
+    DATE: 2020.02.12-2023.08.21
     VERSION: 1.5.2
     CASE: Matrix Operation (C)
     DETAILS: The demo-code for Matrix_Hub.

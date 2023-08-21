@@ -17,7 +17,7 @@ Data: 2020.02.12~2023.08.21
 
 https://github.com/Amoiensis/Matrix_hub
 
-[[Releases 快速下载]: Matrix_Hub_v1.52.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v1.51/Matrix_Hub_v1.51.zip)
+[[Releases 快速下载]: Matrix_Hub_v1.52.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v1.52/Matrix_Hub_v1.52.zip)
 
 ***************************************************************
 

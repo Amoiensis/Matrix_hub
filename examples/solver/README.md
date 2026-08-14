@@ -74,14 +74,14 @@ cmake --build build
 - COR@L MIP：
   - https://coral.ise.lehigh.edu/data-sets/mixed-integer-instances/
 
-当前 parser 支持常见 CPLEX-LP 文本格式的紧凑子集。完整 MPS、二次项、SOS、range row、free variable 等仍是后续扩展点。
+当前 parser 支持常见 CPLEX-LP 文本格式的紧凑子集。
 
 ## 转换工具
 
 `tools/benchmark_to_lp.py` 可以在 Python CPLEX 或 OR-Tools ModelBuilder 可用时筛选并转换 benchmark 文件。
 
 ```bash
-/home/pier/miniconda3/envs/py39_cuda12.4/bin/python \
+python3 \
   examples/solver/tools/benchmark_to_lp.py \
   --url-list examples/solver/benchmark_candidates.txt \
   --download \

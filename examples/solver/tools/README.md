@@ -7,7 +7,7 @@
 示例：
 
 ```bash
-/home/pier/miniconda3/envs/py39_cuda12.4/bin/python \
+python3 \
   examples/solver/tools/benchmark_to_lp.py \
   --url-list examples/solver/benchmark_candidates.txt \
   --download \

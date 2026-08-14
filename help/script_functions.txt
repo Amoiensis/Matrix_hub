@@ -1,0 +1,51 @@
+MatrixHub Script Functions / MatrixHub 脚本函数
+===============================================
+
+Basic creation / 基础生成:
+  eye(n), zeros(m,n), ones(m,n), hilbert(n)
+  [start:end], [start:step:end]
+
+Matrix operations / 矩阵运算:
+  inv(A), pinv(A), transpose(A), A'
+  det(A), tr(A), norm(A), cond(A), rank(A)
+  abs(A), sum(A), min(A), max(A), diag(A)
+  cut(A,...), full(A), find(A), logic_equal(A,B)
+  pmul(A,B), pdiv(A,B), swap(A,...), sample(A,...)
+
+Decomposition and transforms / 分解与变换:
+  [Q, R] = qr(A)
+  [U, S, V] = svd(A)
+  [D, E] = eigen(A) or eig(A)
+  [lambda, vector] = eigen_max(A)
+  [T, U] = uptri(A)
+  [T, L] = lowtri(A)
+  [Tl, D, Tr] = diatri(A)
+  [H, y] = householder(x)
+  [Q, H] = hessenberg(A)
+
+Control flow / 控制流:
+  for k = 1:3
+      X = X + k * A
+  end
+
+  if det(A) > 0
+      sign = 1
+  elif det(A) < 0
+      sign = -1
+  else
+      sign = 0
+  end
+
+Indexing and size / 索引和尺寸:
+  A(1, 2)       single element / 单个元素
+  A[:, 1]       column slice / 列切片
+  A[1:2, 2:3]   block slice / 子矩阵
+  shape(A), size(A), size(A,1), size(A,2)
+
+Compatibility aliases / 兼容别名:
+  qr_q, qr_r, svd_u, svd_s, svd_v,
+  eigen_val, eigen_vec, eigen_max_val, eigen_max_vec
+
+Note / 说明:
+  Complex matrices are reserved for a future version.
+  复数矩阵为后续版本预留。

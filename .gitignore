@@ -1,0 +1,35 @@
+# CMake build output
+build/
+**/build/
+
+# Local binary packages copied back from Windows/macOS/Linux builders.
+dist/
+release_assets/
+
+# OS/editor noise
+.DS_Store
+**/.DS_Store
+
+# Matrix Hub script-mode debug output
+debug.txt
+matrix_hub_debug.txt
+
+# Local solver data and reports are not part of the release package.
+local_data/
+tests/
+solver_report_store/
+**/solver_report_store/
+solver_report_store*/
+**/solver_report_store*/
+examples/solver/results/
+examples/solver/reports/
+
+# Keep only the small curated problem files in the release tree.
+examples/solver/problems/*
+!examples/solver/problems/README.md
+!examples/solver/problems/README.en.md
+!examples/solver/problems/README.ja.md
+!examples/solver/problems/gt2.lp
+!examples/solver/problems/ortools_mip.lp
+!examples/solver/problems/ortools_mip_array.lp
+!examples/solver/problems/lpp0033.lp

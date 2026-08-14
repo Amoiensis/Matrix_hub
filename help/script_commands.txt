@@ -1,0 +1,31 @@
+MatrixHub Commands / MatrixHub 命令
+===================================
+
+help
+  中文: 显示脚本模式帮助。
+  English: Show script-mode help.
+
+help topic / help(topic)
+  中文: 显示指定函数或命令的帮助，例如 help qr 或 help(M_mul)。
+  English: Show help for a function or command, for example help qr or
+  help(M_mul).
+
+vars / who
+  中文: 列出当前变量名、矩阵尺寸和类型信息。
+  English: List current variables with size/type information.
+
+clear
+  中文: 清空当前终端屏幕，不删除变量。
+  English: Clear the terminal screen without deleting variables.
+
+clean
+  中文: 删除当前环境中的所有变量。
+  English: Delete all variables from the current environment.
+
+del name
+  中文: 删除指定变量，例如 del A。
+  English: Delete one variable, for example del A.
+
+quit / exit
+  中文: 退出交互模式。
+  English: Leave the interactive REPL.

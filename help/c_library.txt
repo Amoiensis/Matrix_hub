@@ -1,0 +1,26 @@
+MatrixHub C Library / MatrixHub C 库使用
+========================================
+
+中文:
+  MatrixHub 的核心仍是简单 C 头文件库。直接包含 matrix.h 即可使用矩阵
+  定义和主要运算；需要求解器时再包含 solver_plugin 下的插件头文件。
+
+English:
+  MatrixHub remains a simple C header-based library. Include matrix.h for the
+  matrix type and core operations; include solver_plugin headers only when
+  solver functionality is needed.
+
+Include / 引用:
+  #include "matrix.h"
+  #include "solver_plugin/plugin_Linear_Solver.h"
+  #include "solver_plugin/plugin_LP_Sover.h"
+  #include "solver_plugin/plugin_MIP_Solver.h"
+
+Build example / 构建示例:
+  cmake -S examples/c_library -B build_c_example -DMATRIXHUB_ROOT=$PWD
+  cmake --build build_c_example
+  ./build_c_example/matrixhub_c_example
+
+Memory / 内存:
+  Functions returning Matrix* create new matrices. Release them with M_free().
+  返回 Matrix* 的函数通常创建新矩阵，使用后应调用 M_free() 释放。

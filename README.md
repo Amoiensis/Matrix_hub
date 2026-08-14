@@ -1,430 +1,297 @@
 ![MatrixHub_logo](./docs/img/MatrixHub_logo.png)
 
-Matrix_hub
-=======================================
-矩阵运算库--C语言
----------------------------------------
-A lib for Matrix Operations in C language. (矩阵运算库--C语言) 
+# Matrix Hub v2.0
 
-Author: Amoiensis (Xiping.Yu)
+语言: [中文](README.md) / [English](README.en.md) / [日本語](README.ja.md)
 
-Email: Amoiensis@outlook.com
+Matrix Hub v2.0 是一个轻量级矩阵计算与优化求解工具集，核心目标是在较小代码体积下提供可嵌入、可脚本化、可命令行调用的矩阵计算能力。项目采用 C 语言实现，适合嵌入式部署、轻量应用、小规模工程计算，以及在此基础上的二次开发，例如控制算法、二次优化和工程计算原型。
 
-Data: 2020.02.12~2023.08.21
+项目包含三种使用形态：矩阵运算 C 头文件库、类 Matlab 的 `.m` 脚本/交互式计算器，以及可作为插件或独立程序使用的轻量 LP/MIP 求解器。预编译求解器与交互式计算器的体积保持在约 100KB 级别，便于部署和集成。
 
-***************************************************************
-更多资料和信息：
+## 直接下载使用
 
-https://github.com/Amoiensis/Matrix_hub
+当前提供 Apple Silicon macOS 和 Windows x64 的预编译版本，下载解压后即可直接使用。其他平台可以从源码编译，或通过邮件联系作者协助。
 
-[[Releases 快速下载]: Matrix_Hub_v1.52.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v1.52/Matrix_Hub_v1.52.zip)
+| 平台 | 下载 | 内容 |
+| --- | --- | --- |
+| macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | CLI 脚本计算器、LP/MIP Solver、help 文档和示例 |
+| Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | CLI 脚本计算器、LP/MIP Solver、help 文档和示例 |
 
-***************************************************************
+## 项目信息
 
-具体应用例子：
+| 项目 | 信息 |
+| --- | --- |
+| Project | https://github.com/Amoiensis/Matrix_hub |
+| Author | Sebin (Xiping.Yu) |
+| Email | Amoiensis@outlook.com |
 
-Optimization-Algorithm(最优化算法)：https://github.com/Amoiensis/Optimization-Algorithm
-***************************************************************
+欢迎通过邮件交流使用问题、建议和工程应用场景。
 
-具体：
-	Folder_--_lib_.lib文件_+_.h文件
-	
-	Folder_--_code_.c文件_+_.h文件
+## 三种用法
 
-***************************************************************
+| 用法 | 目标用户 | 入口 |
+| --- | --- | --- |
+| C 头文件库 | 在 C/C++ 项目中做矩阵运算和二次开发，如控制算法、优化算法原型 | `include/matrix.h`, `include/solver_plugin/*.h` |
+| 交互式脚本计算器 | 像 Matlab `.m` 文件一样运行脚本，也支持 `>>` 逐行交互 | `build/Matrix_Hub_v2_0_cli` |
+| 轻量 LP/MIP 求解器 | 约 100KB 级求解器/插件，读取 `.lp` 文件并输出进度、gap 和结果 | `build/Matrix_Hub_v2_0_solver` |
 
-[CONTENT](https://github.com/Amoiensis/Matrix_hub)
----------------------------------------
+## 目录结构
 
-#### 操作-函数
-|                     操作                      |    Func Name     |                     Operation (detailed)                     |
-| :-------------------------------------------: | :--------------: | :----------------------------------------------------------: |
-|                   生成矩阵                    |    Matrix_gen    |                   Generate  a new Matrix.                    |
-|                   复制矩阵                    |   Matrix_copy    |                    Copy  to a new Matrix.                    |
-|                   释放内存                    |      M_free      |           Free  the memory of the Matrix (create).           |
-|                   矩阵显示                    |     M_print      |                       Print,  Display.                       |
-|                单位矩阵(生成)                 |       M_I        |            Generate  a identity Matrix (create).             |
-|                生成(全)零矩阵                 |     M_Zeros      |            Generation  All-Zeros-Matrix (create).            |
-|                生成(全)一矩阵                 |      M_Ones      |            Generation  All-Ones-Matrix (create).             |
-|               生成希尔伯特矩阵                |     Hilbert      |              Generate  Hilbert Matrix (create).              |
-|                    加减法                     |    M_add_sub     |               Addition/  subtraction (create).               |
-|                     乘法                      |      M_mul       |    Matrix  multiplication (create new one, abbr. create).    |
-|                   矩阵数乘                    |     M_numul      |               Number  Multiplication (create).               |
-|         矩阵对应元素乘/除 (哈达玛积)          |    M_pmuldiv     | Hadamard  Product : Multiply / Divide every element in the two Matrix-s (create). |
-|          矩阵对矩阵，对各行进行数乘           |    M_numul_m     |    Matrix  Number Multiplication (using matrix transfer)     |
-|                     求逆                      |    M_Inverse     |                      Inverse  (create).                      |
-|                     伪逆                      |    M_pinv     |          left and right inverses / pseudo-inverse of Matrix.  (create).                      |
-|                     转置                      |       M_T        |                     Transpose  (create).                     |
-|                    行列式                     |      M_det       |                         Determinant.                         |
-|                      迹                       |       M_tr       |                            Trace.                            |
-|                     范数                      |      M_norm      |                  Norm  (1/ 2/ p/ INF/ FRO).                  |
-|                   矩阵求秩                    |      M_rank      |                            Rank.                             |
-|                 矩阵求条件数                  |      M_cond      |                Conditon  Value of the Matrix.                |
-|           矩阵最大特征值、特征向量            |   M_eigen_max    | The maximum eigenvalue/ eigen-vector of the Matrix (create). |
-|                  矩阵特征值                   |   M_eigen_val    |           The eigenvalues of the Matrix (create).            |
-|      矩阵特征值, 及其对应特征向量(矩阵)       |     M_eigen      |  The eigenvalues and eigen-vectors of the Matrix (create).   |
-|                  矩阵绝对值                   |      M_abs       |   Absolute  the value of elements in the Matrix  (create).   |
-|                矩阵行(列)调换                 |      M_Swap      |              Swap  row or cloumn of the Matrix.              |
-|                 矩阵基本变换                  |    M_E_trans     |              Matrix  elementary transformation.              |
-|                 基本变换矩阵                  | Etrans_2_Matrix  | Transforms  the elementary transformation into Matrix (create). |
-|             基本变换矩阵的逆矩阵              | Etrans_4_Inverse |   Inverse  Matrix of elementary transformations (create).    |
-|                   上三角化                    |     M_Uptri_     | Upper-Triangulation  transformation on the Matrix (create).  |
-|                   下三角化                    |    M_Lowtri_     | Lower-Triangulation  transformation on the Matrix (create).  |
-|                    对角化                     |    M_Diatri_     |                  Diagonalization  (create).                  |
-|                 对角矩阵求逆                  |    M_Dia_Inv     |        The  inverse of the diagonal Matrix (create).         |
-|               上三角化(求逆用)                |   M_Uptri_4inv   | For  inverse, upper-triangulation transformation on the Matrix (create). |
-|               下三角化(求逆用)                |  M_Lowtri_4inv   | For  inverse , lower-triangulation transformation on the Matrix (create). |
-|      向量householder变换, 返回变换矩阵H       |   householder    | Householder transformation for  the Vector, return Transformating-Matrix: H (create). |
-|              矩阵householder变换              |  M_householder   | Householder transformation for  the Matrix, return Transformated-Matrix: H_Mat (create). |
-|                  矩阵QR分解                   |       M_QR       |                  QR Decomposition (create).                  |
-|                  矩阵SVD分解                   |       M_SVD       |                  SVD Decomposition. (create).                  |
-|                 切取部分矩阵                  |      M_Cut       |       Cut out a part-matrix from the Matrix (create).        |
-|           从矩阵中抽取/采样特定的行/列.           |      M_Sample       |       Sample some row/col from Matrix. (create).        |
-|                     填充                      |      M_full      |             Full  the Matrix with data (create).             |
-|              (使用矩阵)填充矩阵               |    M_matFull     |            Full  the Matrix with another Matrix.             |
-|            矩阵按列求和/向量元素和            |      M_sum       | Matrix  Column-Summation (create). / Vector element Sum (create) . |
-|          寻找矩阵对应值位置(列优先)           |      M_find      | Find  all the positions with a certain value in the Matrix (create). |
-|   矩阵按列最小行位置     /向量最小元素位置    |      M_min       | Minimum-value position for each row in  the Matrix (create) .  / Vector minimum element position (create) . |
-|   矩阵按列最大行位置     /向量最大元素位置    |      M_max       | Maximum-value position for each row in  the Matrix (create)./ Vector Maximum element position (create) . |
-|            矩阵各列指定行位置的值             |   M_minax_val    | The value of those given (row) positions for each column in the matrix (create). |
-| 矩阵各位置与给定值比较     (返回矩阵,取值0/1) |  M_logic_equal   | Compare every element /pisition of the  Matrix with certain value (create).     [ More : Return a new Matrix, whose every value is 0/1. ] |
-|            两矩阵对应位置逻辑运算             |     M_logic      | Logical  operation of corresponding positions of two matrices |
-|          矩阵批量赋值(使用矩阵传递)           |     M_setval     |       Setting  Values of a Matrix with another Matrix.       |
-|      (函数: M_rank) 释放初等变换内存空间      |   Etrans_free    | (In  Func: M_rank) Free memory for Elementary Transformation. |
-|                     帮助                      |       help       |                            Help.                             |
-
-
-Demo.c (Matrix_hub)
----------------------------------------
-
+```text
+include/                  C 头文件库入口
+include/solver_plugin/    Linear/LP/MIP 求解器插件
+apps/                     交互式脚本计算器与轻量 LP/MIP solver 程序
+examples/c_library/       C 库调用示例和独立 CMakeLists.txt
+examples/scripts/         MatrixHub .m 脚本示例
+examples/solver/          LP/MIP 求解器用法、问题文件和转换工具
+help/                     函数、命令和 solver 帮助文档
 ```
-/*
+
+## 支持的运算
+
+| 类别 | 脚本/CLI 写法 | C API / 插件 | 说明 |
+| --- | --- | --- | --- |
+| 矩阵创建 | `A = [1 2; 3 4]` | `Matrix_gen` | 从连续数据生成矩阵 |
+| 矩阵复制 | - | `Matrix_copy` | 深拷贝矩阵 |
+| 内存释放 | - | `M_free` | 释放 MatrixHub 创建的矩阵 |
+| 显示输出 | `print(A)` | `M_print` | 打印矩阵 |
+| 单位矩阵 | `eye(n)` | `M_I` | 生成单位矩阵 |
+| 零矩阵 | `zeros(m,n)` | `M_Zeros` | 生成全零矩阵 |
+| 一矩阵 | `ones(m,n)` | `M_Ones` | 生成全一矩阵 |
+| Hilbert 矩阵 | `hilbert(n)` | `Hilbert` | 常用于数值稳定性测试的病态矩阵 |
+| 范围向量 | `[2:6]`, `[1:1.2:100]` | - | 支持 start:end 和 start:step:end |
+| 加减法 | `A + B`, `A - B` | `M_add_sub` | 矩阵加减 |
+| 矩阵乘法 | `A * B` | `M_mul` | 标准矩阵乘法 |
+| 标量乘除 | `2*A`, `A/3` | `M_numul` | 标量与矩阵混合计算 |
+| 对应元素乘除 | `pmul(A,B)`, `pdiv(A,B)` | `M_pmuldiv` | Hadamard 乘除 |
+| 转置 | `A'`, `transpose(A)` | `M_T` | 矩阵转置 |
+| 求逆 | `inv(A)` | `M_Inverse` | 适合小规模矩阵计算 |
+| 伪逆 | `pinv(A)` | `M_pinv` | 默认逐步改进为更稳定风格 |
+| 行列式 | `det(A)` | `M_det` | 方阵行列式 |
+| 迹 | `tr(A)`, `trace(A)` | `M_tr` | 方阵对角线求和 |
+| 范数 | `norm(A)` | `M_norm` | 支持常用矩阵/向量范数 |
+| 条件数 | `cond(A)` | `M_cond` | 基础条件数估计 |
+| 秩 | `rank(A)` | `M_rank` | 矩阵秩 |
+| 绝对值 | `abs(A)` | `M_abs` | 元素绝对值 |
+| 求和 | `sum(A)` | `M_sum` | 元素求和 |
+| 最小/最大 | `min(A)`, `max(A)` | `M_min`, `M_max` | 元素最值 |
+| 对角处理 | `diag(A)` | `M_Dia_Inv`, related helpers | 对角提取/对角矩阵相关能力 |
+| 矩阵尺寸 | `shape(A)`, `size(A)` | `A->row`, `A->column` | 返回 `[rows columns]` |
+| 单元素索引 | `A(1,2)` | direct data access | 脚本索引从 1 开始 |
+| 切片 | `A[:,1]`, `A[1:2,2:3]` | `M_Cut`, `M_Sample` | 行列截取和采样 |
+| 查找 | `find(A)` | `M_find` | 查找满足条件的元素位置 |
+| 逻辑比较 | `A == B`, `A < B` | `M_logic`, `M_logic_equal` | 标量/矩阵逻辑判断 |
+| 行列交换 | `swap(A,...)` | `M_Swap` | 行或列交换 |
+| 初等变换 | - | `M_E_trans`, `Etrans_2_Matrix`, `Etrans_4_Inverse` | 基础初等变换 |
+| 上三角化 | `[T,U] = uptri(A)` | `M_Uptri_` | 保留初等变换实现 |
+| 下三角化 | `[T,L] = lowtri(A)` | `M_Lowtri_` | 保留初等变换实现 |
+| 对角化 | `[Tl,D,Tr] = diatri(A)` | `M_Diatri_` | 基础对角化过程 |
+| Householder | `[H,y] = householder(x)` | `householder`, `M_householder` | 正交变换基础 |
+| Hessenberg | `[Q,H] = hessenberg(A)` | `M_householder` based path | Hessenberg 变换 |
+| QR 分解 | `[Q,R] = qr(A)` | `M_QR` | Householder 风格 QR，支持非方阵 |
+| SVD 分解 | `[U,S,V] = svd(A)` | `M_SVD` | 小规模 SVD 分解 |
+| 特征值/向量 | `[D,E] = eigen(A)`, `eig(A)` | `M_eigen`, `M_eigen_val` | 特征值和特征向量 |
+| 最大特征对 | `[lambda,v] = eigen_max(A)` | `M_eigen_max` | 幂迭代风格最大特征值 |
+| 多输出兼容别名 | `qr_q`, `svd_u`, `eigen_vec` | corresponding C helpers | 老接口兼容，新脚本推荐多输出 |
+| 循环 | `for k = 1:3 ... end` | - | 脚本控制流 |
+| 判断 | `if/elif/else/end` | - | 脚本条件分支 |
+| 变量管理 | `vars`, `who`, `clean`, `del A` | - | REPL 工作区管理 |
+| 清屏和帮助 | `clear`, `help qr` | `help/*.txt` | 查询命令、函数和 solver 说明 |
+| 线性方程 | - | `Linear_Solve` | 稠密高斯消元，避免显式求逆 |
+| LP 求解 | solver CLI | `LP_Solver` | 默认修订单纯形，可选内点法 |
+| MIP 求解 | solver CLI | `MIP_Solver` | 轻量 cuts + branch-and-bound |
+
+## 用法 1：作为 C 库引用
+
+Matrix Hub 仍保持头文件为主的简单使用方式。直接包含 `include/matrix.h`，需要 solver 时再包含 `include/solver_plugin/*.h`。
+
+```c
+#include "matrix.h"
+#include "solver_plugin/plugin_Linear_Solver.h"
+#include "solver_plugin/plugin_LP_Sover.h"
+#include "solver_plugin/plugin_MIP_Solver.h"
+```
+
+一个最小的线性方程例子：
+
+```c
+MATRIX_TYPE a_data[4] = {
+    3, 1,
+    1, 2
+};
+MATRIX_TYPE b_data[2] = {9, 8};
+
+Matrix *A = Matrix_gen(2, 2, a_data);
+Matrix *b = Matrix_gen(2, 1, b_data);
+Matrix *x = Linear_Solve(A, b);
+
+M_print(x);
+
+M_free(A);
+M_free(b);
+M_free(x);
+```
+
+更完整的 C 库调用方式可以查看：[examples/c_library/main.c](examples/c_library/main.c)。该示例覆盖矩阵创建、线性方程求解、LP/MIP 插件调用和内存释放等用法。
+
+运行完整示例：
+
+```bash
+cmake -S examples/c_library -B build_c_example -DMATRIXHUB_ROOT=$PWD
+cmake --build build_c_example
+./build_c_example/matrixhub_c_example
+```
+
+## 用法 2：交互式脚本计算器
+
+交互模式会先显示 MatrixHub logo，然后用简洁的 `>>` 提示输入：
+
+```bash
+./build/Matrix_Hub_v2_0_cli
+```
+
+```text
 \ \     __  ___     __      _       __ __     __
  \ \   /  |/  /__ _/ /_____(_)_ __ / // /_ __/ /
  / /  / /|_/ / _ `/ __/ __/ /\ \ // _  / // / _ \
 / /  /_/  /_/\_,_/\__/_/ /_//_\_\/_//_/\_,_/_.__/
-* [INFORMATION]
-    MATRIX_HUB
-    AUTHOR: Xiping.Yu
-    E-MAIL: Amoiensis@outlook.com
-    GITHUB: https://github.com/Amoiensis/Matrix_hub
-    DATE: 2020.02.12-2023.08.21
-    VERSION: 1.5.2
-    CASE: Matrix Operation (C)
-    DETAILS: The demo-code for Matrix_Hub.
-    LICENSE: Apache-2.0
-*/
+MatrixHub v2.0 script mode
+Project: https://github.com/Amoiensis/Matrix_hub
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "matrix.h"
-// # include "./solver_plugin/plugin_LP_Sover.h"
-
-
-int main(int argc, char *argv[]) {
-
-/* [Setting Matrix]*/
-    //	Mat_1
-    ...
-    [ 具体矩阵赋值，见 demo.c ]
-
-/* [Matrix Operation]*/
-// 乘法
-    Matrix *mat_3 = M_mul(mat_2, mat_1);
-    M_print(mat_3);
-    // 加减法
-    Matrix *mat_diff = M_add_sub(1, mat_21, 1, mat_21b);
-    M_print(mat_diff);
-    // 初等变换
-    Etrans_struct _Etrans_;
-    _Etrans_.minuend_line = 2;
-    _Etrans_.subtractor_line = 1;
-    _Etrans_.scale = 2;
-    _Etrans_.next_E_trans = NULL;
-    _Etrans_.forward_E_trans = NULL;
-    M_E_trans(mat_2, &_Etrans_, _ROW_);
-    M_print(mat_2);
-    // 单位矩阵
-    M_print(M_I(5));
-    // 初等变换to矩阵
-    Matrix *mat_4 = Etrans_2_Matrix(&_Etrans_, 5, _ROW_);
-    M_print(mat_4);
-    // 上三角变换
-    Uptri_struct *_Uptri_ = M_Uptri_(mat_21);
-    M_print(_Uptri_->trans_matrix);
-    M_print(_Uptri_->Uptri_matrix);
-    // 下三角变换
-    Lowtri_struct *_Lowtri_ = M_Lowtri_(mat_21);
-    M_print(_Lowtri_->Lowtri_matrix);
-    M_print(_Lowtri_->trans_matrix);
-    // 对角化
-    Dia_struct *_Dia_ = M_Diatri_(mat_21);
-    M_print(_Dia_->trans_leftmatrix);
-    M_print(_Dia_->Diatri_matrix);
-    M_print(_Dia_->trans_rightmatrix);
-    // 矩阵求逆
-    Matrix *_mat_inv = M_Inverse(mat_21);
-    M_print(_mat_inv);
-    // 行列交换
-    M_Swap(_mat_inv, 1, 2, _ROW_);
-    M_print(_mat_inv);
-    // 切割部分
-    Matrix *_mat_cut = M_Cut(_mat_inv, _END_, _END_, 2, 3);
-    M_print(_mat_cut);
-    // 转置
-    Matrix *_mat_T = M_T(_mat_inv);
-    M_print(_mat_T);
-    // 迹
-    MATRIX_TYPE _tr_mat = M_tr(_mat_inv);
-    printf("Trace(Matrix_%x) = %.4lf\n", _mat_inv, _tr_mat);
-    // 行列式
-    MATRIX_TYPE _det_mat = M_det(_mat_inv);
-    printf("Det(Matrix_%x) = %.4lf\n", mat_21, _det_mat);
-    // 填充
-    Matrix *mat_full = M_full(mat_2, 1, 1, 1, 1, 0);
-    M_print(mat_full);
-    M_print(mat_2);
-    // 范数
-    printf("NORM_L1(mat_%x) = %lf\n",mat_b, M_norm(mat_b, 1));
-    printf("NORM_L2(mat_%x) = %lf\n",mat_b, M_norm(mat_b, 2));
-    // 秩
-    printf("Rank(mat_%x) = %d\n", mat_A10, M_rank(mat_A10));
-    printf("Rank(mat_%x) = %d\n", mat_full, M_rank(mat_full));
-    // Hilbert 希尔伯特矩阵
-    M_print(Hilbert(5));
-    // 条件数计算
-    printf("->> Condition_Value = %lf\n", M_cond(Hilbert(5),1));
-    // 矩阵householder变换
-    Matrix * M_H = M_householder(Hilbert(5));
-    M_print(M_H);
-    // 矩阵特征值 + 特征向量
-    Matrix *target = mat_eigen_test;
-    M_print(target);
-    Matrix ** M_eigen_val_vec = M_eigen(target);
-    enum{val=0, vec=1};
-    M_print(M_eigen_val_vec[val]);
-    M_print(M_eigen_val_vec[vec]);
-    //  矩阵QR分解
-    Matrix ** M_Q_R = M_QR(Hilbert(5));
-    enum{q=0, r=1};
-    M_print(M_Q_R[q]);
-    M_print(M_Q_R[r]);
-    // 矩阵 SVD 分解.
-    Matrix ** mat_list_SVD = M_SVD(mat_1);
-    enum{U=0, Dia=1, V=2};
-    M_print(mat_list_SVD[U]);
-    M_print(mat_list_SVD[Dia]);
-    M_print(mat_list_SVD[V]);
-    // 矩阵求伪逆
-    Matrix * mat_pinv = M_pinv(mat_1, _SVD_);
-    M_print(mat_pinv);
-
-/* [Application]*/
-    /* [CASE 1: LP]
-    |    min CX
-    |s.t. AX=b,X>=0
-    LP: linear programming, 求解线性规划.
-    [Note.] 需要在main文件引入 "plugin_LP_Sover.h"
-    # include "./solver_plugin/plugin_LP_Sover.h"
-    */
-    M_LP_struct* LP_result = NULL;
-    // [LP-Case 1]
-    enum LP_method{_Simplex=1,};
-    printf("*** LP-SOLVER START ***\n");
-    LP_result = LP_Solver(mat_A_lp, mat_B_lp,mat_C_lp, _Simplex); // 使用单纯形法解线性规划.
-    printf("*** LP-SOLVER END ***\n");
-    if (LP_result != NULL){
-        printf("[COST]\n"); // mat_C_lp, C矩阵, 成本矩阵.
-        M_print(LP_result->_matrix_c);
-        printf("[BASE]\n"); // 最优解的基构成
-        M_print(LP_result->_matrix_base);
-        printf("[VALUES]\n"); // 最优值
-        M_print(M_T(LP_result->_matrix_b));
-        printf("[MAT_A]\n"); // 最后的变换系数矩阵.
-        M_print(LP_result->_matrix_A);
-        printf("[DELTA]\n"); // 各基的delta.
-        M_print(LP_result->_matrix_delta);
-        printf(">> OPT-VALUES: %lf\n", LP_result->values_opt); // 求解状态.
-        printf(">> iter-num: %d\n", LP_result->iter_num);
-        printf(">> [Note.] Please Check is Feasible or Not.\n"); // 求解迭代次数.
-        LP_free(LP_result);
-    }else{
-        system("pause");
-        printf("[NO FEASIBLE.] SEARCH ALL BRANCHES.\n");
-    }
-
-    // [ CASE 2: linear equations solver]linear equations,
-    // 解线性方程. e.g. mat_A*x = mat_b
-    printf("# Solver:mat_A*x = mat_b\n");
-    Matrix *_mat_result = M_mul(M_Inverse(mat_A10), mat_b10);
-    M_print(_mat_result);(M_Inverse(mat_A10), mat_b10);
-    M_print(_mat_result);
-
-/* [Others]*/
-    // Free Memory of Matrix, 释放矩阵内存.
-    M_free(_mat_T);
-
-/* [Help]*/
-    help("help");
-    help("M_rank");
-    help("Update");
-    help("MatrixHub");
-
-    system("pause");
-    return 0;
-}
-
+>> A = [4 1 2; 1 3 0; 2 0 5]
+>> b = [7; 8; 9]
+>> x = pinv(A) * b
+>> residual = norm(A*x - b)
+>> [Q, R] = qr(A)
+>> vars
+>> help qr
 ```
 
+脚本模式适合放在文档或课程材料里，像 Markdown 代码块一样展示一段完整计算：
+
+```matlab
+A = [4 1 2; 1 3 0; 2 0 5];
+b = [7; 8; 9];
+x = pinv(A) * b
+residual = norm(A*x - b)
+
+[Q, R] = qr(A);
+[U, S, V] = svd(A);
+[D, E] = eigen(A);
+
+for k = 1:3
+    P = A + k * eye(3)
+end
+
+if det(A) > 0
+    sign = 1
+elif det(A) < 0
+    sign = -1
+else
+    sign = 0
+end
+```
+
+运行：
+
+```bash
+./build/Matrix_Hub_v2_0_cli examples/scripts/basic.m
+./build/Matrix_Hub_v2_0_cli --debug debug.txt examples/scripts/basic.m
+```
+
+REPL 支持左/右移动光标，上/下浏览历史输入；脚本中分号会抑制输出，`--debug` 会把变量快照写入文本文件。
+
+## 用法 3：轻量 LP/MIP 求解器
+
+solver 模式用于读取 `.lp` 文件并求解 LP/MIP 问题。它保持约 100KB 级别的小体积，适合轻量部署和简易开发使用，也可以展示分支定界过程中的 incumbent、bound 和 gap。
+
+```bash
+./build/Matrix_Hub_v2_0_solver --help
+./build/Matrix_Hub_v2_0_solver lp  examples/solver/problems/ortools_mip.lp
+./build/Matrix_Hub_v2_0_solver mip examples/solver/problems/ortools_mip.lp
+```
+
+一个带进度和结果报告的 MIP 示例：
+
+```bash
+./build/Matrix_Hub_v2_0_solver mip examples/solver/problems/gt2.lp \
+  --progress=25 \
+  --node-limit=5000 \
+  --time-limit=30 \
+  --gap-limit=0.05 \
+  --output-dir solver_report_store
+```
+
+输出会类似这样：
+
+```text
+MatrixHub v2.0 solver mode
+Project: https://github.com/Amoiensis/Matrix_hub
+
+[example parser] parsed vars=188 rows=29 integer=188
+[MIP] node=0 open=1 cuts=... incumbent=none lower_bound=-inf upper_bound=none gap=inf event=start
+[MIP] node=25 open=... cuts=... incumbent=... lower_bound=... upper_bound=... gap=... event=relax
+status = NODE_LIMIT (2)
+incumbent_status = FEASIBLE
+objective = ...
+[example report] wrote solver_report_store/gt2_mip_result.txt
+```
+
+常用参数：
+
+```text
+--progress[=N]       每 N 次迭代/节点显示进度
+--output-dir DIR     输出人类可读的结果报告
+--time-limit SEC     最大求解时间
+--gap-limit VALUE    达到 gap 后停止
+--node-limit N       MIP 最大节点数
+--open-limit N       MIP 最大 open node 数
+--method bb|cut-bb   B&B 或 root cuts + B&B
+--branch first|most  分支变量选择
+--node-select dfs|best-bound
+--bound-mode parent|tight
+```
+
+`examples/solver/problems/` 只保留小型发布样例：`gt2.lp`、`ortools_mip.lp`、`ortools_mip_array.lp`、`lpp0033.lp`。更大的 LP/MIP benchmark 不随仓库提交，下载来源见 [examples/solver/README.md](examples/solver/README.md)。
+
+## 帮助
+
+MatrixHub 的帮助分为三类：
+
+| 场景 | 使用方式 |
+| --- | --- |
+| C 函数/API | 在 CLI 中输入 `help M_mul`、`help M_QR`、`help c_library`，或直接查看 `help/M_mul.txt`、`include/matrix.h` |
+| 命令行计算器 | 在 REPL 中输入 `help`、`help script_mode`、`help script_functions`、`help vars` |
+| LP/MIP solver | 运行 `./build/Matrix_Hub_v2_0_solver --help`，或在 CLI 中输入 `help solver_mode` |
+
+常用主题：
+
+```text
+help
+help script_mode
+help script_functions
+help solver_mode
+help c_library
+help M_mul
+```
 
-## [[更新说明]](https://github.com/Amoiensis/Matrix_hub) 
+主要帮助入口采用中英双语；单个函数的详细说明保存在对应的 `help/*.txt` 文件中。
 
-#### [Matrix Hub v1.52] 2023.08.21
+## 构建
 
-1. 新增函数, 详情见下表 M_SVD: SVD分解/ M_pinv:矩阵伪逆/ M_Sample:矩阵采样 ;
+```bash
+cmake -S . -B build
+cmake --build build
+```
 
-|                操作                |   Func Name   |                     Operation (detailed)                     |
-| :--------------------------------: | :-----------: | :----------------------------------------------------------: |
-|                  矩阵SVD分解                   |       M_SVD       |                  SVD Decomposition. (create).                  |
-|                     伪逆                      |    M_pinv     |          left and right inverses / pseudo-inverse of Matrix.  (create).                      |
-|           从矩阵中抽取/采样特定的行/列.           |      M_Sample       |       Sample some row/col from Matrix. (create).        |
+主要产物：
 
-[Note.] 目前 M_pinv , 支持 左/右逆直接计算、SVD分解计算伪逆;
+```text
+build/Matrix_Hub_v2_0_demo      C 库调用示例
+build/Matrix_Hub_v2_0_cli       交互式脚本计算器
+build/Matrix_Hub_v2_0_solver    轻量 LP/MIP 文件求解器
+```
 
-2. 新增 Matrix_Hub 插件部分 “solver_plugin”.
+## 维护说明
 
-    i. 已添加 LP (线性规划) 求解器, 基于 Simplex-Method (单纯形法), 后续将考虑添加 简易MIP 和 部分其他优化算法.
-
-    ii. 欢迎关注和使用本项目的同学, 分享和贡献 在您使用场景中的插件功能.
-
-    iii. 其他一些具体优化的应用 可以查看 [Github/Amoiensis: Optimization-Algorithm](https://github.com/Amoiensis/Optimization-Algorithm).
-
-    iv. [Note.] 矩阵的基础功能 和 插件部分 是解耦的, 如果在您的项目中不需要使用 插件部分, 不引入插件部分即可.
-
-3. 非常感谢 [645770225](https://github.com/645770225)同学, [wtyhainan](https://github.com/wtyhainan)同学 对于 特征值计算/householder变换, 相关函数的BUG提出和修改建议.
-
-    已经在版本 Matrix_Hub_v1.52 中得到修正, 具体问题请查看 [[ISSUE-8]](https://github.com/Amoiensis/Matrix_hub/issues/8)/ [[ISSUE-9]](https://github.com/Amoiensis/Matrix_hub/issues/9)/ [[ISSUE-10]](https://github.com/Amoiensis/Matrix_hub/issues/10)/ [[ISSUE-11]](https://github.com/Amoiensis/Matrix_hub/issues/11).
-
-4. 在版本 Matrix_Hub_v1.52 中, 考虑部分嵌入式设备的需要, 使用 memcpy/memset 实现赋值操作较多的函数, 替换原先逐个赋值的操作.
-
-    值得注意的是:
-
-    i. 在一定情况下, 编译器会对逐一赋值进行优化;
-
-    ii. 因为矩阵是行优先结构存储在内存中, 对于特定场景, 该修改不一定能效改善性能; 
-    
-    iii. 如果有需求也可以将 "memcpy/memset" 修改回"逐个赋值", 该部分作为注释已在源码中, 您可以在 "matrix.h" 中修改即可.
-
-
-
-#### [Matrix Hub v1.51] 2022.05.28
-
-1. 新增函数, 详情见下表 M_eigen_max/ householder/ M_householder/ M_QR/ M_eigen_val;
-
-|                操作                |   Func Name   |                     Operation (detailed)                     |
-| :--------------------------------: | :-----------: | :----------------------------------------------------------: |
-|      矩阵最大特征值、特征向量      |  M_eigen_max  | The maximum eigenvalue/ eigen-vector of the Matrix (create). |
-| 向量householder变换, 返回变换矩阵H |  householder  | Householder transformation for  the Vector, return Transformating-Matrix: H (create). |
-|        矩阵householder变换         | M_householder | Householder transformation for  the Matrix, return Transformated-Matrix: H_Mat (create). |
-|             矩阵QR分解             |     M_QR      |                  QR Decomposition (create).                  |
-|             矩阵特征值             |  M_eigen_val  |           The eigenvalues of the Matrix (create).            |
-| 矩阵特征值, 及其对应特征向量(矩阵) |    M_eigen    |  The eigenvalues and eigen-vectors of the Matrix (create).   |
-
-
-2. 新增 运算过程的"显示详细等级"(The Level of Details of Output).
-
-   位置: _DETAILED_ (state.h)
-   
-   档位: 0/1/2/3 四等级: 0->3 逐渐详细 ( 默认设置为 2级)
-
-   **level - 显示详情的函数**  
-
-   0 - M_print （除设定的输出外，不额外显示其他计算细节信息）  
-
-   1 - M_Uptri_/ M_Lowtri_/ M_Diatri_ ;  
-
-   2 - M_full/ M_Inverse/ M_eigen_val/ M_rank / M_Uptri_/ M_Lowtri_/ M_Diatri_/ M_print ;  
-
-   3 - M_free/ M_mul/ M_full/ M_Inverse/ M_rank/ M_mul / M_Uptri_/ M_Lowtri_/ M_Diatri_/ M_print ;  
-
-3. 解决求逆运算中存在的问题(感谢[@1u2e](https://github.com/1u2e)): 结构体释放问题、一维矩阵求逆;
-   详见：https://github.com/Amoiensis/Matrix_hub/issues/4
-
-4. 本版本已完成内存测试，目前测试后暂无内存泄漏问题；
-
-5. 更新"README", 参考"功能表"中 OPERATION 列, 如返回值为新开辟空间则标记有 "create", 用于提供内存管理的参考,
-       具体请参考对应 OPERATION 说明 help("README").
-
-6. 自Matrix_Hub v1.51 起, 可以使用 help("MatrixHub") 查看当前版本号.
-
-
-
-#### [Matrix Hub v1.50] 2022.04.29
-
-1. 新增函数, 矩阵求条件数 M_cond (matrix.h);
-
-2. 进一步克服 v1.44 内存问题, 完善内存管理, 可使用 help("Memory_Manager") 查看;
-
-   **注意**：本次更新内存管理大幅改善，已修复v1.4x内存问题。
-
-
-
-#### [Matrix Hub v1.44] 2022.04.28
-
-1. 新增函数 矩阵求秩: M_rank (matrix.h);
-
-2. 新增函数 Etrans_free, 实现 M_rank 初等变换内存释放; 详见 help("Etrans_free"), (matrix.h)
-
-3. 新增希尔伯特矩阵(病态矩阵)生成: Hilbert (matrix.h);
-
-4. 新增矩阵不可逆报错, Error: M_Dia_Inv_023: "@ERROR: Matrix is not invertible!" (state.h);
-
-5. 已修复 v1.43 计算不稳定问题;
-
-   **注意**：本次更新内存和计算速度都得到提高，已修复v1.43稳定性问题。
-
-
-
-#### [Matrix Hub v1.43] 2021.10.26
-
-1. 更新矩阵求逆算法，所有基于求逆的运算速度提升，更新"M_Inverse"函数；
-
-2. 修复初等变换的内存问题，程序运行内存占用减少；
-
-3. 删除“Etrans_2_Inverse”函数；新增“Etrans_4_Inverse”函数，用于加速矩阵求逆；
-
-4. 更新“M_Uptri_4inv”、“M_Lowtri_4inv”用于加速矩阵求逆；
-
-   ~~**注意**：推荐目前请使用 [Matrix Hub v1.42]v1.42版本，本次更新内存和计算速度都得到提高，但是存在一些稳定性问题，正在修复。~~
-
-#### [Matrix Hub v1.42] 2021.08.06
-
-1. 新增求解矩阵最大特征值函数:M_eigen_max()，可使用help("M_eigen_max")查看具体使用；
-2. 新增矩阵取绝对值函数 M_abs()，可使用help("M_abs")查看具体使用；
-3. 完善向量和矩阵的各种范数运算M_norm()：新增1范数(1)、2范数(2)、无穷范数(INF)、F范数（FRO）等方法，修正了矩阵二范数计算错误的问题,可使用help("M_norm")查看具体使用；
-
-#### [Matrix Hub v1.4] 2021.02.02
-
-1.	新增 help() 函数，可以输入各函数名称，查看具体使用方法；如，help("help")、help("Matrix_gen")、help("README")、help("Update")，等;
-
-
-2. 	新增函数“M_numul_m ()”，用于矩阵数乘 ，矩阵对于矩阵进行操作，各行对应数乘 ；
-
-
-3.	将原 M_matFull() 函数中，最左侧，和最上侧，row_up和column_left取值从“0”设置为“1（_HEAD_）”;
-
-
-4.	修正原代码中"Matirx"的误写，修正为"Matrix";
-
-
-
-ATTENTION
----------------------------------------
-
-Please feel free to contact with me for any questions, thank you!
-
-Don't spread the files without permission!
-
-所有文件仅仅供学习交流！
-
-***************************************
+v2.0 发布树只保留当前版本源码。历史版本目录由旧 main/archive 分支保存，不再放入主开发目录。

@@ -1,7 +1,0 @@
-\ \     __  ___     __      _       __ __     __
- \ \   /  |/  /__ _/ /_____(_)_ __ / // /_ __/ /
- / /  / /|_/ / _ `/ __/ __/ /\ \ // _  / // / _ \
-/ /  /_/  /_/\_,_/\__/_/ /_//_\_\/_//_/\_,_/_.__/
-MatrixHub Version: 1.51 (2022.05), License: Apache-2.0
-By Xiping.Yu.  Amoiensis@outlook.com
-Information: https://github.com/Amoiensis/Matrix_hub

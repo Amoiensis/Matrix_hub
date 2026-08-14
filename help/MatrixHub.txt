@@ -1,0 +1,15 @@
+\ \     __  ___     __      _       __ __     __
+ \ \   /  |/  /__ _/ /_____(_)_ __ / // /_ __/ /
+ / /  / /|_/ / _ `/ __/ __/ /\ \ // _  / // / _ \
+/ /  /_/  /_/\_,_/\__/_/ /_//_\_\/_//_/\_,_/_.__/
+
+MatrixHub Version: 2.0 (2026.08), License: Apache-2.0
+By Xiping.Yu.  Amoiensis@outlook.com
+Project: https://github.com/Amoiensis/Matrix_hub
+
+中文:
+  MatrixHub v2.0 提供 C 头文件库、CLI 矩阵计算器、LP/MIP solver 三种用法。
+
+English:
+  MatrixHub v2.0 provides three usage modes: C header library, CLI matrix
+  calculator, and LP/MIP solver.

@@ -1,0 +1,32 @@
+MatrixHub Script Mode / MatrixHub 脚本模式
+===========================================
+
+中文:
+  MatrixHub v2.0 可以作为命令行矩阵计算器运行。不给脚本文件时进入
+  交互模式；指定 .m 文件时按文件顺序执行。
+
+English:
+  MatrixHub v2.0 can run as a command-line matrix calculator. Without a script
+  path it enters REPL mode; with a .m file it executes the file.
+
+Usage / 用法:
+  Matrix_Hub_v2_0_cli
+  Matrix_Hub_v2_0_cli examples/scripts/basic.m
+  Matrix_Hub_v2_0_cli --debug debug.txt examples/scripts/basic.m
+
+Examples / 示例:
+  A = [1 2; 3 4]
+  B = inv(A)
+  A * B
+  [Q, R] = qr(A)
+  [U, S, V] = svd(A)
+  [D, E] = eigen(A)
+  shape(A)
+  A[:, 1]
+  A[1:2, 2:3]
+
+Notes / 说明:
+  - Indexing is 1-based. 索引从 1 开始。
+  - A semicolon suppresses output. 语句末尾加分号会抑制输出。
+  - --debug writes assigned variables to a text file.
+    --debug 会把赋值后的变量快照写入文本文件。

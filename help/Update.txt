@@ -1,0 +1,21 @@
+MatrixHub Update / MatrixHub 更新记录
+=====================================
+
+#### Matrix Hub v2.0 - 2026.08.14
+
+中文:
+  1. 项目结构整理为单一当前版本源码树，历史版本由 main/archive 分支保存。
+  2. 新增三种清晰用法入口：C 头文件库、CLI 矩阵计算器、LP/MIP solver。
+  3. CLI 和 solver 版本显示统一为 MatrixHub v2.0。
+  4. solver 目录只保留小型发布问题文件，其他 benchmark 放到本地忽略目录或按文档下载。
+  5. help 入口按 C API、CLI 和 solver 三类使用场景整理。
+
+English:
+  1. The source tree now keeps one current version; historical versions are
+     preserved by the main/archive branch history.
+  2. Three usage entries are documented: C header library, CLI calculator, and
+     LP/MIP solver.
+  3. CLI and solver banners now report MatrixHub v2.0.
+  4. The solver directory keeps only small curated problem files; larger benchmarks
+     should stay local or be downloaded as documented.
+  5. Help entries are organized for C API, CLI, and solver usage.

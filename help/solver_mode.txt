@@ -1,0 +1,34 @@
+MatrixHub Solver Mode / MatrixHub 求解器模式
+============================================
+
+中文:
+  solver 模式读取 LP 格式文件，并调用 LP/MIP 插件求解。当前 parser 支持
+  常见 CPLEX-LP 文本格式的一个小子集，适合教学和小规模演示。
+
+English:
+  Solver mode reads an LP-format text file and solves it through the LP/MIP
+  plugins. The parser supports a compact subset of common CPLEX-LP syntax for
+  teaching and small demos.
+
+Usage / 用法:
+  Matrix_Hub_v2_0_solver lp  examples/solver/problems/ortools_mip.lp
+  Matrix_Hub_v2_0_solver mip examples/solver/problems/ortools_mip.lp
+  Matrix_Hub_v2_0_solver mip examples/solver/problems/gt2.lp --progress=25
+
+Options / 参数:
+  --progress[=N]          progress every N iterations/nodes / 每 N 步显示进度
+  --output-dir DIR        write result report / 输出结果报告
+  --time-limit SECONDS    max wall-clock time / 最大求解时间
+  --gap-limit VALUE       stop by gap / 按 gap 停止
+  --node-limit N          MIP node limit / MIP 节点上限
+  --open-limit N          open node limit / open node 上限
+  --method bb|cut-bb      branch-and-bound mode / 分支定界模式
+  --branch first|most     branching rule / 分支变量规则
+  --node-select dfs|best-bound
+  --bound-mode parent|tight
+
+Included problems / 内置问题:
+  gt2.lp, ortools_mip.lp, ortools_mip_array.lp, lpp0033.lp
+
+More data / 更多数据:
+  See examples/solver/README.md for MIPLIB, Netlib LP, and COR@L sources.

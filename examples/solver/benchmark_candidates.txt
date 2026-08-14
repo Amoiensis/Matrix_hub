@@ -1,0 +1,31 @@
+# Candidate public benchmark URLs for benchmark_to_lp.py.
+# Lines starting with # are ignored by the tool.
+#
+# MIPLIB 2017 individual MPS files use this pattern:
+# https://miplib.zib.de/WebData/instances/<instance-name>.mps.gz
+# These names are examples from the public MIPLIB benchmark/detail pages.
+
+https://miplib.zib.de/WebData/instances/50v-10.mps.gz
+https://miplib.zib.de/WebData/instances/air05.mps.gz
+https://miplib.zib.de/WebData/instances/reblock115.mps.gz
+https://miplib.zib.de/WebData/instances/seymour1.mps.gz
+https://miplib.zib.de/WebData/instances/fast0507.mps.gz
+
+# Smaller MIPLIB3 instances, useful for compact parser and progress checks.
+# Source directory: https://miplib2010.zib.de/miplib3/miplib3/
+https://miplib2010.zib.de/miplib3/miplib3/p0033.mps.gz
+https://miplib2010.zib.de/miplib3/miplib3/pp08a.mps.gz
+https://miplib2010.zib.de/miplib3/miplib3/pp08aCUTS.mps.gz
+https://miplib2010.zib.de/miplib3/miplib3/gt2.mps.gz
+https://miplib2010.zib.de/miplib3/miplib3/mod008.mps.gz
+https://miplib2010.zib.de/miplib3/miplib3/p0201.mps.gz
+https://miplib2010.zib.de/miplib3/miplib3/p0282.mps.gz
+
+# COR@L MIP instances are available as a tar archive. Use --input-archive after
+# downloading it outside the repository:
+# http://coral.ie.lehigh.edu/~mip-instances/instances/ALL_INSTANCE.tar
+#
+# Netlib LP data has many 200KB-1MB compressed-MPS candidates, for example:
+# 80bau3b, d2q06c, dfl001, fit2d, fit2p, maros-r7, pilot87, wood1p, woodw.
+# Netlib uses its historical compressed MPS encoding, so convert only after
+# uncompressing with the Netlib EMPS tool.

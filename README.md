@@ -6,7 +6,7 @@
 
 Matrix Hub v2.0 是一个轻量级矩阵计算与优化求解工具集，核心目标是在较小代码体积下提供可嵌入、可脚本化、可命令行调用的矩阵计算能力。项目采用 C 语言实现，适合嵌入式部署、轻量应用、小规模工程计算，以及在此基础上的二次开发，例如控制算法、二次优化和工程计算原型。
 
-项目包含三种使用形态：矩阵运算 C 头文件库、类 Matlab 的 `.m` 脚本/交互式计算器，以及可作为插件或独立程序使用的轻量 LP/MIP 求解器。预编译求解器与交互式计算器的体积保持在约 100KB 级别，便于部署和集成。
+项目包含三种使用形态：矩阵运算 C 头文件库、类 Matlab 的 `.m` 脚本/交互式计算器，以及可作为插件或独立程序使用的轻量 LP/MIP 求解器。预编译求解器与交互式计算器的体积保持在约 100KB 级别，便于部署和集成；CLI 与 solver 也已部署为 WebAssembly 网页版，可以在浏览器中直接访问使用。
 
 ## 直接下载使用
 
@@ -16,6 +16,15 @@ Matrix Hub v2.0 是一个轻量级矩阵计算与优化求解工具集，核心�
 | --- | --- | --- |
 | macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | CLI 脚本计算器、LP/MIP Solver、help 文档和示例 |
 | Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | CLI 脚本计算器、LP/MIP Solver、help 文档和示例 |
+
+## 网页直接使用
+
+如果只想快速体验矩阵脚本或 LP/MIP 求解器，也可以直接使用 WebAssembly 版本。计算在浏览器本地执行，适合演示、小规模问题验证和无安装环境下的临时使用。
+
+| 网页版 | 入口 | 说明 |
+| --- | --- | --- |
+| MatrixHub CLI | https://www.peking.ren/matrixhub_cli/ | 类 Matlab `.m` 脚本计算器和交互式输入 |
+| MatrixHub Solver | https://www.peking.ren/matrixhub_solver/ | LP/MIP `.lp` 文件求解器，本地化求解 |
 
 ## 项目信息
 

@@ -6,7 +6,7 @@ Languages: [中文](README.md) / [English](README.en.md) / [日本語](README.ja
 
 Matrix Hub v2.0 is a lightweight toolkit for matrix computing and optimization solving. Its goal is to provide embeddable, scriptable, and command-line matrix computing capabilities with a small C codebase. It is suitable for embedded deployment, lightweight applications, small engineering workflows, and secondary development such as control algorithms, optimization prototypes, and engineering calculations.
 
-The project provides three usage forms: a C header library for matrix operations, a Matlab-like `.m` script and interactive calculator, and a lightweight LP/MIP solver that can be used either as plugins or as a standalone command-line program. The prebuilt calculator and solver stay around the 100 KB scale, making them easy to deploy and integrate.
+The project provides three usage forms: a C header library for matrix operations, a Matlab-like `.m` script and interactive calculator, and a lightweight LP/MIP solver that can be used either as plugins or as a standalone command-line program. The prebuilt calculator and solver stay around the 100 KB scale, making them easy to deploy and integrate. The CLI and solver are also available as WebAssembly pages for direct browser-based use.
 
 ## Download And Run
 
@@ -16,6 +16,15 @@ Prebuilt ready-to-run packages are currently provided for Apple Silicon macOS an
 | --- | --- | --- |
 | macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | CLI script calculator, LP/MIP solver, help files, and examples |
 | Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | CLI script calculator, LP/MIP solver, help files, and examples |
+
+## Use In Browser
+
+For a quick trial of the matrix script calculator or LP/MIP solver, use the WebAssembly builds directly in a browser. Computation runs locally in the browser, which is convenient for demos, small problem checks, and environments where installing binaries is not desirable.
+
+| Web build | URL | Notes |
+| --- | --- | --- |
+| MatrixHub CLI | https://www.peking.ren/matrixhub_cli/ | Matlab-like `.m` script calculator and interactive input |
+| MatrixHub Solver | https://www.peking.ren/matrixhub_solver/ | LP/MIP `.lp` file solver with local browser execution |
 
 ## Project Info
 

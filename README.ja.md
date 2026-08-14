@@ -6,7 +6,7 @@
 
 Matrix Hub v2.0 は、行列計算と最適化 solver のための軽量ツールキットです。小さな C コードベースで、組み込みやすく、スクリプト実行でき、コマンドラインからも使える行列計算機能を提供することを目標にしています。組み込み配置、軽量アプリケーション、小規模な工学計算、制御アルゴリズムや最適化プロトタイプなどの二次開発に利用できます。
 
-利用形態は、行列演算用 C ヘッダライブラリ、Matlab 風 `.m` スクリプト/対話式計算器、プラグインまたは単独実行ファイルとして使える軽量 LP/MIP solver の 3 つです。事前ビルド済みの計算器と solver は約 100KB 規模で、配置と組み込みがしやすい構成です。
+利用形態は、行列演算用 C ヘッダライブラリ、Matlab 風 `.m` スクリプト/対話式計算器、プラグインまたは単独実行ファイルとして使える軽量 LP/MIP solver の 3 つです。事前ビルド済みの計算器と solver は約 100KB 規模で、配置と組み込みがしやすい構成です。CLI と solver は WebAssembly 版としても提供しており、ブラウザから直接利用できます。
 
 ## ダウンロードしてすぐ使う
 
@@ -16,6 +16,15 @@ Matrix Hub v2.0 は、行列計算と最適化 solver のための軽量ツー�
 | --- | --- | --- |
 | macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | CLI スクリプト計算器、LP/MIP solver、help、サンプル |
 | Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | CLI スクリプト計算器、LP/MIP solver、help、サンプル |
+
+## ブラウザで使う
+
+行列スクリプト計算器や LP/MIP solver をすぐ試したい場合は、WebAssembly 版をブラウザから利用できます。計算はブラウザ内でローカルに実行されるため、デモ、小規模問題の確認、インストールできない環境での利用に向いています。
+
+| Web 版 | URL | 内容 |
+| --- | --- | --- |
+| MatrixHub CLI | https://www.peking.ren/matrixhub_cli/ | Matlab 風 `.m` スクリプト計算器と対話入力 |
+| MatrixHub Solver | https://www.peking.ren/matrixhub_solver/ | LP/MIP `.lp` ファイル solver、ブラウザ内ローカル実行 |
 
 ## プロジェクト情報
 

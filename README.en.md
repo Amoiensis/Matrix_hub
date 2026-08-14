@@ -12,10 +12,10 @@ The project provides three usage forms: a C header library for matrix operations
 
 Prebuilt ready-to-run packages are currently provided for Apple Silicon macOS and Windows x64. Download, unzip, and run directly. Other platforms can be built from source, or you can contact the author for help.
 
-| Platform | Download | Contents |
-| --- | --- | --- |
-| macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | CLI script calculator, LP/MIP solver, help files, and examples |
-| Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | CLI script calculator, LP/MIP solver, help files, and examples |
+| Platform | Download | CLI / Solver Size | Contents |
+| --- | --- | --- | --- |
+| macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | approx. 119 KB / 136 KB | CLI script calculator, LP/MIP solver, help files, and examples |
+| Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | approx. 345 KB / 365 KB | CLI script calculator, LP/MIP solver, help files, and examples |
 
 ## Use In Browser
 

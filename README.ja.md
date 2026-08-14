@@ -12,10 +12,10 @@ Matrix Hub v2.0 は、行列計算と最適化 solver のための軽量ツー�
 
 現在、Apple Silicon macOS と Windows x64 向けの事前ビルド済み実行パッケージを提供しています。ダウンロードして解凍すれば、そのまま利用できます。その他の環境ではソースからビルドするか、作者までメールで相談してください。
 
-| プラットフォーム | ダウンロード | 内容 |
-| --- | --- | --- |
-| macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | CLI スクリプト計算器、LP/MIP solver、help、サンプル |
-| Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | CLI スクリプト計算器、LP/MIP solver、help、サンプル |
+| プラットフォーム | ダウンロード | CLI / Solver サイズ | 内容 |
+| --- | --- | --- | --- |
+| macOS Apple Silicon | [MatrixHub-v2.0-macos-arm64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-macos-arm64.zip) | 約 119 KB / 136 KB | CLI スクリプト計算器、LP/MIP solver、help、サンプル |
+| Windows x64 | [MatrixHub-v2.0-windows-x64.zip](https://github.com/Amoiensis/Matrix_hub/releases/download/v2.0/MatrixHub-v2.0-windows-x64.zip) | 約 345 KB / 365 KB | CLI スクリプト計算器、LP/MIP solver、help、サンプル |
 
 ## ブラウザで使う
 

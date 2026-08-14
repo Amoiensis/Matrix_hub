@@ -110,6 +110,25 @@ The script mode supports matrix literals, ranges, indexing, slicing, nested call
 
 ## Lightweight LP/MIP Solver
 
+LP stands for Linear Programming, and MIP stands for Mixed-Integer Programming. Matrix Hub's solver focuses on linear objectives, linear constraints, and continuous/integer/binary variables, so it is close to the common MILP (Mixed-Integer Linear Programming) use case.
+
+A compact problem form is:
+
+```text
+LP:
+  minimize or maximize   c^T x
+  subject to             A x <= b
+                         l <= x <= u
+
+MIP / MILP:
+  minimize or maximize   c^T x + d^T y
+  subject to             A x + B y <= b
+                         l <= x <= u
+                         y_i integer or binary
+```
+
+Background: [Linear programming](https://en.wikipedia.org/wiki/Linear_programming), [Mixed-integer programming / Integer programming](https://en.wikipedia.org/wiki/Mixed-integer_programming).
+
 ```bash
 ./build/Matrix_Hub_v2_0_solver --help
 ./build/Matrix_Hub_v2_0_solver lp  examples/solver/problems/ortools_mip.lp

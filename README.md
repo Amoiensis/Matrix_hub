@@ -203,7 +203,24 @@ REPL 支持左/右移动光标，上/下浏览历史输入；脚本中分号会�
 
 ## 用法 3：轻量 LP/MIP 求解器
 
-solver 模式用于读取 `.lp` 文件并求解 LP/MIP 问题。它保持约 100KB 级别的小体积，适合轻量部署和简易开发使用，也可以展示分支定界过程中的 incumbent、bound 和 gap。
+solver 模式用于读取 `.lp` 文件并求解 LP/MIP 问题。LP 是 Linear Programming（线性规划），MIP 是 Mixed-Integer Programming（混合整数规划）；本项目求解器面向线性目标、线性约束和整数/二进制变量，因此更接近常见的 MILP（Mixed-Integer Linear Programming）使用场景。它保持约 100KB 级别的小体积，适合轻量部署和简易开发使用，也可以展示分支定界过程中的 incumbent、bound 和 gap。
+
+问题可粗略写成下面的标准型，其中 `x` 是连续变量，`y` 是整数或二进制变量：
+
+```text
+LP:
+  minimize or maximize   c^T x
+  subject to             A x <= b
+                         l <= x <= u
+
+MIP / MILP:
+  minimize or maximize   c^T x + d^T y
+  subject to             A x + B y <= b
+                         l <= x <= u
+                         y_i integer or binary
+```
+
+背景参考：[Linear programming](https://en.wikipedia.org/wiki/Linear_programming)、[Mixed-integer programming / Integer programming](https://en.wikipedia.org/wiki/Mixed-integer_programming)。
 
 ```bash
 ./build/Matrix_Hub_v2_0_solver --help

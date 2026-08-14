@@ -106,6 +106,25 @@ cmake --build build_c_example
 
 ## 軽量 LP/MIP Solver
 
+LP は Linear Programming（線形計画）、MIP は Mixed-Integer Programming（混合整数計画）を意味します。Matrix Hub の solver は線形目的関数、線形制約、連続/整数/バイナリ変数を対象にしており、一般的な MILP（Mixed-Integer Linear Programming）に近い用途で使えます。
+
+問題はおおまかに次の形で表せます。
+
+```text
+LP:
+  minimize or maximize   c^T x
+  subject to             A x <= b
+                         l <= x <= u
+
+MIP / MILP:
+  minimize or maximize   c^T x + d^T y
+  subject to             A x + B y <= b
+                         l <= x <= u
+                         y_i integer or binary
+```
+
+参考: [Linear programming](https://en.wikipedia.org/wiki/Linear_programming), [Mixed-integer programming / Integer programming](https://en.wikipedia.org/wiki/Mixed-integer_programming).
+
 ```bash
 ./build/Matrix_Hub_v2_0_solver --help
 ./build/Matrix_Hub_v2_0_solver lp  examples/solver/problems/ortools_mip.lp
